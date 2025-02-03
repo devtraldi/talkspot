@@ -1,0 +1,267 @@
+[
+  {
+    "model": "app.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$870000$U7Wap0cSGoPeigukWEiK6c$DdVLr1PA3nDwWE8kT/lipA1GcMC/lYfLMcQDYcLFvSc=",
+      "last_login": null,
+      "is_superuser": true,
+      "username": "admin",
+      "first_name": "Admin",
+      "last_name": "Admin",
+      "email": "admin@example.com",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2024-01-25T19:28:55.984Z",
+      "bio": null,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "app.user",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$870000$U7Wap0cSGoPeigukWEiK6c$DdVLr1PA3nDwWE8kT/lipA1GcMC/lYfLMcQDYcLFvSc=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "homer",
+      "first_name": "Homer",
+      "last_name": "Simpson",
+      "email": "homer@simpsons.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-01-25T19:30:00.000Z",
+      "bio": "Just trying to enjoy a donut and some TV.",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "app.user",
+    "pk": 3,
+    "fields": {
+      "password": "pbkdf2_sha256$870000$U7Wap0cSGoPeigukWEiK6c$DdVLr1PA3nDwWE8kT/lipA1GcMC/lYfLMcQDYcLFvSc=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "bart",
+      "first_name": "Bart",
+      "last_name": "Simpson",
+      "email": "bart@simpsons.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-01-25T19:30:00.000Z",
+      "bio": "Eat my shorts! Always causing trouble, but with a heart of gold.",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "app.user",
+    "pk": 4,
+    "fields": {
+      "password": "pbkdf2_sha256$870000$U7Wap0cSGoPeigukWEiK6c$DdVLr1PA3nDwWE8kT/lipA1GcMC/lYfLMcQDYcLFvSc=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "marge",
+      "first_name": "Marge",
+      "last_name": "Simpson",
+      "email": "marge@simpsons.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-01-25T19:30:00.000Z",
+      "bio": null,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "app.user",
+    "pk": 5,
+    "fields": {
+      "password": "pbkdf2_sha256$870000$U7Wap0cSGoPeigukWEiK6c$DdVLr1PA3nDwWE8kT/lipA1GcMC/lYfLMcQDYcLFvSc=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "lisa",
+      "first_name": "Lisa",
+      "last_name": "Simpson",
+      "email": "lisa@simpsons.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-01-25T19:30:00.000Z",
+      "bio": "The smartest one in the family.",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "app.post",
+    "pk": 1,
+    "fields": {
+      "title": "Skateboarding Adventures",
+      "content": "I just pulled off an insane trick at the Springfield skatepark! It was totally awesome! Can't wait to do it again, dude.",
+      "created_at": "2024-03-14T15:30:00.000Z",
+      "author": 3
+    }
+  },
+  {
+    "model": "app.post",
+    "pk": 2,
+    "fields": {
+      "title": "Prank of the Day",
+      "content": "I put a bucket of water above the door to Principal Skinner's office. The look on his face was priceless when it fell! Classic.",
+      "created_at": "2024-05-10T12:00:00.000Z",
+      "author": 3
+    }
+  },
+  {
+    "model": "app.post",
+    "pk": 3,
+    "fields": {
+      "title": "A Donut a Day Keeps the Stress Away",
+      "content": "Another day, another donut. I swear, they make everything better. And a beer at Moe's never hurts either. Cheers to the good life!",
+      "created_at": "2024-07-22T18:45:00.000Z",
+      "author": 2
+    }
+  },
+  {
+    "model": "app.post",
+    "pk": 4,
+    "fields": {
+      "title": "Lunar Loco",
+      "content": "I tried to build a rocket out of junk and sent it to space. Failed miserably, but at least it was a blast!",
+      "created_at": "2024-08-11T14:00:00.000Z",
+      "author": 3
+    }
+  },
+  {
+    "model": "app.comment",
+    "pk": 1,
+    "fields": {
+      "content": "That sounds awesome, Bart! Just be careful!",
+      "created_at": "2024-03-14T16:00:00.000Z",
+      "author": 4,
+      "post": 1
+    }
+  },
+  {
+    "model": "app.comment",
+    "pk": 2,
+    "fields": {
+      "content": "I told you skateboarding was dangerous! Always thinking you’re invincible.",
+      "created_at": "2024-03-14T16:05:00.000Z",
+      "author": 5,
+      "post": 1
+    }
+  },
+  {
+    "model": "app.comment",
+    "pk": 3,
+    "fields": {
+      "content": "I got this, mom! I’m the king of tricks!",
+      "created_at": "2024-03-14T16:10:00.000Z",
+      "author": 3,
+      "post": 1
+    }
+  },
+  {
+    "model": "app.comment",
+    "pk": 4,
+    "fields": {
+      "content": "I can't believe you did that to Skinner. You’re a real troublemaker, Bart!",
+      "created_at": "2024-05-10T12:20:00.000Z",
+      "author": 5,
+      "post": 2
+    }
+  },
+  {
+    "model": "app.comment",
+    "pk": 5,
+    "fields": {
+      "content": "It was hilarious, Lisa! You should have seen his face!",
+      "created_at": "2024-05-10T12:30:00.000Z",
+      "author": 3,
+      "post": 2
+    }
+  },
+  {
+    "model": "app.comment",
+    "pk": 6,
+    "fields": {
+      "content": "That rocket thing was wild, Bart. Good try though! I’m just glad you didn’t blow up the whole house.",
+      "created_at": "2024-08-11T14:30:00.000Z",
+      "author": 4,
+      "post": 4
+    }
+  },
+  {
+    "model": "app.comment",
+    "pk": 7,
+    "fields": {
+      "content": "You’re nuts, Bart! But I gotta admit, it was fun to watch. I mean, who else would try to launch a rocket made of junk?",
+      "created_at": "2024-08-11T14:40:00.000Z",
+      "author": 5,
+      "post": 4
+    }
+  },
+  {
+    "model": "app.comment",
+    "pk": 8,
+    "fields": {
+      "content": "What were you thinking, Bart? You should've at least had a proper plan! You could’ve used all that junk for something useful, like building a treehouse for me.",
+      "created_at": "2024-08-11T14:50:00.000Z",
+      "author": 2,
+      "post": 4
+    }
+  },
+  {
+    "model": "app.comment",
+    "pk": 9,
+    "fields": {
+      "content": "I agree with Lisa. You should’ve been more careful, Bart. But, knowing you, I can’t say I’m surprised. You never really think things through, do you?",
+      "created_at": "2024-08-11T14:55:00.000Z",
+      "author": 4,
+      "post": 4
+    }
+  },
+  {
+    "model": "app.comment",
+    "pk": 10,
+    "fields": {
+      "content": "Hey, I had a vision! It wasn’t a total failure – we learned something, right? I just need a bigger rocket next time... maybe a bigger house too, just in case.",
+      "created_at": "2024-08-11T15:00:00.000Z",
+      "author": 3,
+      "post": 4
+    }
+  },
+  {
+    "model": "app.comment",
+    "pk": 11,
+    "fields": {
+      "content": "Next time, how about we stick to something less explosive? Like a cool skateboard trick? At least I won't have to worry about my hair catching fire.",
+      "created_at": "2024-08-11T15:05:00.000Z",
+      "author": 5,
+      "post": 4
+    }
+  },
+  {
+    "model": "app.comment",
+    "pk": 12,
+    "fields": {
+      "content": "You know, maybe we can turn this into a family project. Build a rocket, go to space... at least it would be a nice family outing. Just make sure it’s not made of junk next time.",
+      "created_at": "2024-08-11T15:10:00.000Z",
+      "author": 2,
+      "post": 4
+    }
+  },
+  {
+    "model": "app.comment",
+    "pk": 13,
+    "fields": {
+      "content": "Bart, you just can't help yourself, can you? I mean, sure, I admire your creativity... but you really need to start thinking things through. A rocket made of junk? Seriously?\n\nImagine if you'd just used that energy for something more productive. We could’ve built something useful. Instead, we have a burnt-out lawn and a few singed hairs. Let’s leave the space exploration to NASA, okay?",
+      "created_at": "2024-08-11T15:15:00.000Z",
+      "author": 4,
+      "post": 4
+    }
+  }
+]
