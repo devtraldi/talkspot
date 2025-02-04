@@ -2,4 +2,5 @@
 Projecto final UpSkill
 
 ## Constituição do Grupo
-- Maya Yendo Dias 1
+- Maya Yendo Dias
+- Rafael
