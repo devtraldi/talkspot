@@ -1,8 +1,18 @@
 {% extends 'app/base.html' %}
 
-
 {% block content %}
 <div class="container">
-    <h1 class="my-5">App</h1>
+    <h1 class="my-5">Todos os Posts</h1>
+    <ul class="list-group">
+        {% for post in posts %}
+        <li class="list-group-item">
+            <a href="{% url 'post_list' post.id %}">{{ post.title }}</a>
+            <small class="text-muted">Postado por {{ post.author.username }} em {{ post.created_at }}</small>
+            {% if request.user == post.author %}
+                <a href="{% url 'edit_post' post.id %}" class="btn btn-warning btn-sm float-end">Editar</a>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
 </div>
 {% endblock %}

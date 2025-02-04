@@ -1,0 +1,41 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ post.title }}</h1>
+    <p>{{ post.content }}</p>
+    <small class="text-muted">Postado por {{ post.author.username }} em {{ post.created_at }}</small>
+
+    <!-- Botão de editar post (apenas para o autor) -->
+    {% if request.user == post.author %}
+        <a href="{% url 'edit_post' post.id %}" class="btn btn-warning">Editar Post</a>
+    {% endif %}
+
+    <hr>
+
+    <h3>Comentários</h3>
+    {% for comment in post.comments.all %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <p>{{ comment.content }}</p>
+            <small class="text-muted">Comentado por {{ comment.author.username }} em {{ comment.created_at }}</small>
+
+            <!-- Botão de editar comentário (apenas para o autor) -->
+            {% if request.user == comment.author %}
+                <a href="{% url 'edit_comment' post.id comment.id %}" class="btn btn-warning btn-sm float-end">Editar Comentário</a>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+
+    <!-- Formulário para adicionar comentário -->
+    <h4 class="mt-4">Adicionar Comentário</h4>
+    <form method="post" action="{% url 'create_comment' post.id %}">
+        {% csrf_token %}
+        <div class="mb-3">
+            <textarea class="form-control" name="content" rows="3" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Enviar Comentário</button>
+    </form>
+</div>
+{% endblock %}
