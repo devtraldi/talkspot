@@ -1,17 +1,82 @@
 /* Set your styles here */
 #jumbotron {
-    background-image: url(static/images/logo.png);
+    background-image: url('../images/logo_redondo.png');
     background-size: cover;
-    padding-top: 25%;
-    padding-bottom: 5%;
+    padding-top: 30%;
+    padding-bottom: 10%;
+    color: #ff81c1;
+    text-align: center;
 }
-section{
+
+section {
+    margin: 0;
     padding-top: 100px;
     padding-bottom: 100px;
-    text-align: left;
-}
-footer{
-    padding-top: 100px;
-    padding-bottom: 50px;
     text-align: center;
+}
+
+footer {
+    text-align: center;
+    padding: 50px 0;
+    background-color: #343a40;
+    color: white;
+}
+
+.navbar {
+    background-color: #2f64d6 !important;
+    font-family: 'Comic Neue', cursive;
+}
+.navbar-dark .navbar-nav .nav-link {
+    color: #f8db27;
+}
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: #ffffff;
+}
+.navbar-dark .navbar-toggler {
+    border-color: #f8db27;
+}
+.navbar-right .nav-link {
+    color: #ff81c1;
+}
+.navbar-right .nav-link:hover {
+    color: #9c5b01;
+}
+
+.gf {
+    color: #ffffff;
+    background: #9c5b01;
+    padding: 2px 5px;
+    border-radius: 3px;
+    }
+
+.btn-primary {
+    background-color: #f8db27;
+    border: 2px solid #2f64d6;
+    color: #2f64d6;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #2f64d6;
+    border-color: #f8db27;
+    color: #f8db27;
+}
+
+.btn-secondary {
+    background-color: #2f64d6;
+    border: 2px solid #f8db27;
+    color: #ffffff;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background-color: #f8db27;
+    border-color: #2f64d6;
+    color: #2f64d6;
 }

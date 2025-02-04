@@ -31,82 +31,69 @@
 
 <body>
     <!-- Menus -->
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark sticky-top">
         <div class="container-fluid">
-            <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link" href="#jumbotron">HOME</a></li>
-                <li class="nav-item"><a class="nav-link" href="#band">BAND</a></li>
-                <li class="nav-item"><a class="nav-link" href="#tour">TOUR</a></li>
-                <li class="nav-item"><a class="nav-link" href="#contact">CONTACT</a></li>
-            </ul>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="#jumbotron">HOME</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">SOBRE</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#stats">NÚMEROS</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#testimonials">DEPOIMENTOS</a></li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="app/signup"><i class="bi bi-person"></i> Sign Up</a></li>
+                    <li class="nav-item"><a class="nav-link" href="app/login"><i class="bi bi-box-arrow-in-right"></i> Login</a></li>
+                </ul>
+            </div>
         </div>
     </nav>
 
-    <!-- Band image -->
-    <div id="jumbotron">
-        <div class="container text-white text-center">
-            <h1 class="display-4">Chicago</h1>
-            <p class="lead">Thank you, Chicago - a night we will never forget!</p>
-        </div>
-    </div>
-
-    <!-- About the band -->
-    <section id="band" class="section-white bg-white text-dark">
-        <div class="container">
-            <h2>THE BAND</h2>
-            <p><i>We love music</i></p>
-            <p style="text-align: justify;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            </p>
-            <div id="members" class="row">
-                <div class="col">
-                    <p>Name 1</p>
-                    <img src="bandmember.jpg" />
-                </div>
-                <div class="col">
-                    <p>Name 2</p>
-                    <img src="bandmember.jpg" />
-                </div>
-                <div class="col">
-                    <p>Name 3</p>
-                    <img src="bandmember.jpg" />
-                </div>
-            </div>
-        </div>
+    <!-- Seção Jumbotron -->
+    <section id="jumbotron">
+        <h1><span class="gf">Bem-vindo ao TalkSpot!</span></h1>
+        <p><span class="gf">A rede social do futuro. Conecte-se, compartilhe e interaja como nunca antes.</span></p>
+        <a href="/signup" class="btn btn-primary">Cadastre-se</a>
+        <a href="/login" class="btn btn-secondary">Login</a>
     </section>
 
-    <!-- Tour -->
-    <section id="tour" class="section-dark bg-dark text-white">
-        <div class="container">
-            <h2>TOUR DATES</h2>
-            <p><i>Remember to book your tickets!</i></p>
-            <ul class="list-group">
-                <li class="list-group-item disabled">29/Feb - Atlanta</li>
-                <li class="list-group-item active">14/Mar - Palm Beach</li>
-                <li class="list-group-item">25/Apr - Los Angeles</li>
-            </ul>
-        </div>
+    <!-- Seção Sobre -->
+    <section id="about">
+        <h2>O que é o TalkSpot?</h2>
+        <p>O TalkSpot é a rede social que mais cresce no mundo, com mais de 1 milhão de usuários ativos. Aqui, você pode compartilhar posts, comentar, interagir e se conectar com pessoas de todo o planeta. Tudo isso em uma plataforma simples, segura e divertida.</p>
     </section>
 
-    <!-- Contact -->
-    <section id="contact" class="section-white bg-white text-dark">
-        <div class="container">
-            <h2>CONTACT INFO</h2>
-            <p><i>Fan? Contact us!</i></p>
-            <form id="contact-form">
-                <input class="form-control mb-3" type="text" placeholder="Name" />
-                <input class="form-control mb-3" type="text" placeholder="Email" />
-                <input class="form-control mb-3" type="text" placeholder="Message" />
-                <input class="form-control btn btn-primary" type="submit" value="Send" />
-            </form>
-        </div>
+    <!-- Seção Estatísticas -->
+    <section id="stats">
+        <h2>TalkSpot em Números</h2>
+        <p>1 milhão de usuários ativos</p>
+        <p>Crescimento de 200% nos últimos 6 meses</p>
+        <p>Mais de 5 milhões de posts compartilhados</p>
+    </section>
+
+    <!-- Seção Depoimentos -->
+    <section id="testimonials">
+        <h2>O que nossos usuários dizem</h2>
+        <p>"O TalkSpot mudou a forma como me conecto com meus amigos. Adoro a simplicidade e a interação!" – João Silva</p>
+        <p>"Finalmente uma rede social que prioriza a experiência do usuário. Recomendo a todos!" – Maria Souza</p>
+    </section>
+
+    <!-- Seção Call-to-Action Final -->
+    <section id="cta">
+        <h2>Junte-se à comunidade TalkSpot hoje!</h2>
+        <p>Cadastre-se agora e comece a compartilhar suas ideias com o mundo.</p>
+        <a href="/signup" class="btn btn-primary">Cadastre-se</a>
+        <a href="/login" class="btn btn-secondary">Login</a>
     </section>
 
     <!-- Footer -->
-    <footer class="section-dark bg-dark text-white">
-        <div class="container">
-            <p>&copy; 2024 - The BAND</p>
-            <p>Powered by CSS3 and Bootstrap</p>
-        </div>
+    <footer>
+        <p>© 2025 TalkSpot. Todos os direitos reservados.</p>
+        <a href="/about">Sobre Nós</a> |
+        <a href="/terms">Termos de Uso</a> |
+        <a href="/privacy">Política de Privacidade</a>
     </footer>
 </body>
 
