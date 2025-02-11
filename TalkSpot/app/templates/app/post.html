@@ -8,7 +8,7 @@
 
     <!-- Botão de editar post (apenas para o autor) -->
     {% if request.user == post.author %}
-        <a href="{% url 'edit_post' post.id %}" class="btn btn-warning">Editar Post</a>
+    <a href="{% url 'edit_post' post.id %}" class="btn btn-warning">Editar Post</a>
     {% endif %}
 
     <hr>
@@ -23,17 +23,50 @@
         <button type="submit" class="btn btn-primary">Enviar Comentário</button>
     </form>
 
-    <h3>Comentários</h3>
+    <h3>Comentários: {{ post.comments.count }}</h3>
     {% for comment in post.comments.all %}
     <div class="card mb-3">
         <div class="card-body">
             <p>{{ comment.content }}</p>
             <small class="text-muted">Comentado por {{ comment.author.username }} em {{ comment.created_at }}</small>
 
+
             <!-- Botão de editar comentário (apenas para o autor) -->
             {% if request.user == comment.author %}
-                <a href="{% url 'edit_comment' post.id comment.id %}" class="btn btn-warning btn-sm float-end">Editar Comentário</a>
+            <a href="{% url 'edit_comment' post.id comment.id %}" class="btn btn-warning btn-sm float-end">Editar
+                Comentário</a>
             {% endif %}
+
+            <!-- Botão de deletar comentário (apenas para o autor) -->
+            {% if request.user == comment.author %}
+            <button type="button" class="btn btn-danger btn-sm float-end me-2" data-bs-toggle="modal"
+                    data-bs-target="#deleteCommentModal{{ comment.id }}">
+                Deletar Comentário
+            </button>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Modal de confirmação deletar comentário -->
+    <div class="modal fade" id="deleteCommentModal{{ comment.id }}" tabindex="-1"
+         aria-labelledby="deleteCommentModalLabel{{ comment.id }}" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteCommentModalLabel{{ comment.id }}">Confirmar Exclusão</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Tem certeza que deseja excluir este comentário?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <a href="{% url 'delete_comment' post.id comment.id %}" class="btn btn-danger">Confirmar
+                        Exclusão</a>
+                </div>
+            </div>
+
+
         </div>
     </div>
     {% endfor %}

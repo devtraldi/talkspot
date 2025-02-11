@@ -3,11 +3,33 @@
 {% block content %}
 <div class="container">
     <h1 class="my-5">Todos os Posts</h1>
+
+    <!-- Formulário para adicionar post -->
+    <div class="mt-5">
+        <h2>Criar Novo Post</h2>
+        <form method="post" action="{% url 'create_post' %}">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="title" class="form-label">Título</label>
+                <input type="text" class="form-control" id="title" name="title" required>
+            </div>
+            <div class="mb-3">
+                <label for="content" class="form-label">Conteúdo</label>
+                <textarea class="form-control" id="content" name="content" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Criar Post</button>
+        </form>
+    </div>
+
+
     <ul class="list-group">
+
         {% for post in posts %}
+
         <li class="list-group-item">
             <a href="{% url 'post_list' post.id %}">{{ post.title }}</a>
             <small class="text-muted">Postado por {{ post.author.username }} em {{ post.created_at }}</small>
+            <p>Comentários: {{ post.comments.count }}</p>
 
             <!-- Botão de editar que abre em nova página -->
             {% if request.user == post.author %}
@@ -40,7 +62,9 @@
                 </div>
             </div>
         </div>
+
         {% endfor %}
+
     </ul>
 </div>
 {% endblock %}

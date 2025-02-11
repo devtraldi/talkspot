@@ -32,6 +32,16 @@ def post_list(request, post_id):
     return render(request, 'app/post.html', {'post': post})
 
 
+def create_post(request):
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        content = request.POST.get('content')
+        author = request.user
+        Post.objects.create(title=title, content=content, author=author)
+        return redirect('app_index')
+    return render(request, 'app/create_post.html')
+
+
 def edit_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     # Verifica se o usuário é o autor do post
@@ -78,3 +88,17 @@ def edit_comment(request, post_id, comment_id):
         comment.save()
         return redirect('post_list', post_id=post_id)
     return render(request, 'app/edit_comment.html', {'comment': comment})
+
+
+def delete_comment(request, post_id, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+
+    # Verifica se o usuário é o autor do comentário
+    if request.user != comment.author:
+        return HttpResponseForbidden("Você não tem permissão para excluir este comentário.")
+
+    # Exclui o post
+    comment.delete()
+
+    # Redireciona de volta para a página do post
+    return redirect('post_list', post_id=post_id)
