@@ -45,6 +45,20 @@ def edit_post(request, post_id):
     return render(request, 'app/edit_post.html', {'post': post})
 
 
+def delete_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+
+    # Verifica se o usuário é o autor do post
+    if request.user != post.author:
+        return HttpResponseForbidden("Você não tem permissão para excluir este post.")
+
+    # Exclui o post
+    post.delete()
+
+    # Redireciona para a página inicial após a exclusão
+    return redirect('app_index')
+
+
 def create_comment(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     if request.method == 'POST':

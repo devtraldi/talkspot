@@ -13,6 +13,16 @@
 
     <hr>
 
+    <!-- Formulário para adicionar comentário -->
+    <h4 class="mt-4">Adicionar Comentário</h4>
+    <form method="post" action="{% url 'create_comment' post.id %}">
+        {% csrf_token %}
+        <div class="mb-3">
+            <textarea class="form-control" name="content" rows="3" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Enviar Comentário</button>
+    </form>
+
     <h3>Comentários</h3>
     {% for comment in post.comments.all %}
     <div class="card mb-3">
@@ -28,14 +38,6 @@
     </div>
     {% endfor %}
 
-    <!-- Formulário para adicionar comentário -->
-    <h4 class="mt-4">Adicionar Comentário</h4>
-    <form method="post" action="{% url 'create_comment' post.id %}">
-        {% csrf_token %}
-        <div class="mb-3">
-            <textarea class="form-control" name="content" rows="3" required></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Enviar Comentário</button>
-    </form>
+
 </div>
 {% endblock %}
