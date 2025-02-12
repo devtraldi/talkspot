@@ -29,6 +29,19 @@
         <li class="list-group-item">
             <a href="{% url 'post_list' post.id %}">{{ post.title }}</a>
             <small class="text-muted">Postado por {{ post.author.username }} em {{ post.created_at }}</small>
+            <!-- Botão de curtir -->
+            <form method="post" action="{% url 'like_post' post.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline-danger">
+                    {% if request.user in post.likes.all %}
+                        ❤️ Descurtir
+                    {% else %}
+                        🤍 Curtir
+                    {% endif %}
+                    ({{ post.total_likes }})
+                </button>
+            </form>
+            <p>Likes: {{ post.likes.count }}</p>
             <p>Comentários: {{ post.comments.count }}</p>
 
             <!-- Botão de editar que abre em nova página -->

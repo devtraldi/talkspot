@@ -25,6 +25,7 @@
 
     <h3>Comentários: {{ post.comments.count }}</h3>
     {% for comment in post.comments.all %}
+
     <div class="card mb-3">
         <div class="card-body">
             <p>{{ comment.content }}</p>

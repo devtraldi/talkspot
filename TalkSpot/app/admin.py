@@ -17,7 +17,7 @@ class CommentInLine(admin.TabularInline):
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('title', 'author', 'created_at', 'content_preview')
+    list_display = ('title', 'author', 'created_at', 'content_preview', 'total_likes_display')
     list_filter = ('author', 'created_at')
     search_fields = ('title', 'content', 'author__first_name', 'author__last_name')
     inlines = [CommentInLine]
@@ -27,6 +27,11 @@ class PostAdmin(admin.ModelAdmin):
         return obj.content[:100] + '...' if len(obj.content) > 100 else obj.content
 
     content_preview.short_description = 'Content Preview'
+
+    def total_likes_display(self, obj):
+        return obj.total_likes()
+
+    total_likes_display.short_description = 'Total Likes'
 
 
 @admin.register(Comment)

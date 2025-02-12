@@ -106,3 +106,15 @@ def delete_comment(request, post_id, comment_id):
 
     # Redireciona de volta para a página do post
     return redirect('post_list', post_id=post_id)
+
+
+def like_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+
+    # Verifica se o usuário já curtiu o post
+    if request.user in post.likes.all():
+        post.likes.remove(request.user)  # Descurtir
+    else:
+        post.likes.add(request.user)  # Curtir
+
+    return redirect('app_index')
