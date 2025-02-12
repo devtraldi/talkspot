@@ -37,7 +37,7 @@
             {% endif %}
 
             <!-- Botão de deletar que abre o modal para double check confirmar -->
-            {% if request.user == post.author %}
+            {% if request.user == post.author or request.user.is_staff %}
                 <button type="button" class="btn btn-danger btn-sm float-end me-2" data-bs-toggle="modal" data-bs-target="#deleteModal{{ post.id }}">
                     Deletar
                 </button>

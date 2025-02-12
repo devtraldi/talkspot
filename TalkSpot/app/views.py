@@ -33,6 +33,8 @@ def post_list(request, post_id):
 
 
 def create_post(request):
+    if request.user.is_staff:
+        return HttpResponseForbidden("Você não tem permissão para criar post.")
     if request.method == 'POST':
         title = request.POST.get('title')
         content = request.POST.get('content')
@@ -58,8 +60,8 @@ def edit_post(request, post_id):
 def delete_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
 
-    # Verifica se o usuário é o autor do post
-    if request.user != post.author:
+    # Verifica se o usuário é o autor do post. Staff faz a moderação e pode deletar qualquer post
+    if request.user != post.author and not request.user.is_staff:
         return HttpResponseForbidden("Você não tem permissão para excluir este post.")
 
     # Exclui o post
@@ -71,6 +73,8 @@ def delete_post(request, post_id):
 
 def create_comment(request, post_id):
     post = get_object_or_404(Post, id=post_id)
+    if request.user.is_staff:
+        return HttpResponseForbidden("Você não tem permissão para criar comentários.")
     if request.method == 'POST':
         content = request.POST.get('content')
         author = request.user
@@ -93,8 +97,8 @@ def edit_comment(request, post_id, comment_id):
 def delete_comment(request, post_id, comment_id):
     comment = get_object_or_404(Comment, id=comment_id)
 
-    # Verifica se o usuário é o autor do comentário
-    if request.user != comment.author:
+    # Verifica se o usuário é o autor do comentário. Staff faz a moderação e pode deletar qualquer comment
+    if request.user != comment.author and not request.user.is_staff:
         return HttpResponseForbidden("Você não tem permissão para excluir este comentário.")
 
     # Exclui o post

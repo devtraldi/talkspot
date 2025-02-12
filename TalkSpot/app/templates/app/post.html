@@ -38,7 +38,7 @@
             {% endif %}
 
             <!-- Botão de deletar comentário (apenas para o autor) -->
-            {% if request.user == comment.author %}
+            {% if request.user == comment.author or request.user.is_staff %}
             <button type="button" class="btn btn-danger btn-sm float-end me-2" data-bs-toggle="modal"
                     data-bs-target="#deleteCommentModal{{ comment.id }}">
                 Deletar Comentário
