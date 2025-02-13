@@ -22,7 +22,7 @@
     <title>Talk Spot</title>
 
      <!-- Ícone do site (favicon) -->
-    <link rel="shortcut icon" href="{% static 'images/favicon_talk_spot.ico' %}" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'website/images/favicon_talk_spot.ico' %}" type="image/x-icon">
     <!-- Styles -->
     <style>
 
@@ -51,12 +51,34 @@
         </div>
     </nav>
 
-    <!-- Seção Jumbotron -->
+    <!-- Seção Jumbotron
     <section id="jumbotron">
         <h1><span class="gf">Bem-vindo ao TalkSpot!</span></h1>
         <p><span class="gf">Não guarde suas ideias no cabelo! Compartilhe aqui no Talk Spot!</span></p>
         <a href="/signup" class="btn btn-primary">Cadastre-se</a>
         <a href="/login" class="btn btn-secondary">Login</a>
+    </section>
+    -->
+
+    <!-- Seção Jumbotron NOVO -->
+    <section id="jumbotron">
+        <div class="container">
+          <div class="row align-items-center">
+            <!-- Logo Talk Spot parte da esquerda -->
+            <div class="col-md-4 text-center">
+              <img src="static/website/images/logo_redondo.png" alt="Logo Talk Spot" class="img-fluid w-75">
+            </div>
+            <!-- Seção da direita -->
+            <div class="col-md-8">
+                <h1>Onde suas ideias encontram um palco para brilhar</h1>
+                <button class="btn btn-outline-dark w-100 my-2">Inscrever-se com Google</button>
+                <button class="btn btn-outline-dark w-100 my-2">Inscrever-se com GitHub</button>
+                <p class="text-center my-2">ou</p>
+                <button class="btn btn-primary w-100 my-2">Criar conta</button>
+                <p class="text-center my-2">Já tens uma conta? <a href="app/login">Entrar</a></p>
+            </div>
+          </div>
+        </div>
     </section>
 
     <!-- Seção Sobre -->

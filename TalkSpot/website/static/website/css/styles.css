@@ -1,6 +1,5 @@
 /* Set your styles here */
 #jumbotron {
-    background-image: url('/static/website/images/logo_redondo.png');
     background-size: cover;
     padding-top: 30%;
     padding-bottom: 10%;
