@@ -29,18 +29,29 @@
         <li class="list-group-item">
             <a href="{% url 'post_list' post.id %}">{{ post.title }}</a>
             <small class="text-muted">Postado por {{ post.author.username }} em {{ post.created_at }}</small>
+
+
             <!-- Botão de curtir -->
-            <form method="post" action="{% url 'like_post' post.id %}">
+            <form method="post" action="{% url 'like_post' post.id %}" class="like-form">
                 {% csrf_token %}
-                <button type="submit" class="btn btn-outline-danger">
+                <button type="submit" class="like-button">
+                    <i class="bi {% if request.user in post.likes.all %}bi-heart-fill{% else %}bi-heart{% endif %}"></i>
+                </button>
+                <span class="like-count">({{ post.total_likes }})</span>
+            </form>
+
+            <form action="{% url 'like_post' post.id %}" method="post" target="_self">
+                {% csrf_token %}
+                <button type="submit">
                     {% if request.user in post.likes.all %}
-                        ❤️ Descurtir
+                        Descurtir
                     {% else %}
-                        🤍 Curtir
+                        Curtir
                     {% endif %}
-                    ({{ post.total_likes }})
                 </button>
             </form>
+
+
             <p>Likes: {{ post.likes.count }}</p>
             <p>Comentários: {{ post.comments.count }}</p>
 
