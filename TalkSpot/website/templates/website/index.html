@@ -27,11 +27,51 @@
     <style>
 
     </style>
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let navbar = document.querySelector(".navbar");
+            let lastScrollTop = 0;
+
+            window.addEventListener("scroll", function () {
+                let scrollTop = window.scrollY || document.documentElement.scrollTop;
+
+                if (scrollTop > 20) {
+                    navbar.classList.remove("navbar-hidden");
+                    navbar.classList.add("navbar-visible");
+                }
+
+                lastScrollTop = scrollTop;
+            });
+        });
+        document.addEventListener("DOMContentLoaded", function () {
+            let verMais = document.getElementById("verMais");
+            let sections = document.querySelectorAll(".hidden-section");
+
+            function mostrarSeções() {
+                sections.forEach(section => {
+                    section.classList.add("visible-section");
+                });
+            }
+
+            verMais.addEventListener("click", function () {
+                mostrarSeções();
+                document.getElementById("about").scrollIntoView({ behavior: "smooth" });
+            });
+
+            window.addEventListener("scroll", function () {
+                if (window.scrollY > 20) {
+                    mostrarSeções();
+                }
+            });
+        });
+    </script>
+
 </head>
 
 <body>
     <!-- Menus -->
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark sticky-top">
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark sticky-top navbar-hidden">
         <div class="container-fluid">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -71,24 +111,35 @@
             <!-- Seção da direita -->
             <div class="col-md-8">
                 <h2>Onde suas ideias encontram um palco para brilhar</h2>
-                <button class="btn btn-outline-dark w-100 my-2">Inscrever-se com Google</button>
-                <button class="btn btn-outline-dark w-100 my-2">Inscrever-se com GitHub</button>
-                <p class="text-center my-2">ou</p>
+
+                <button class="btn btn-outline-dark w-100 my-2"><i class="bi bi-google"></i>  Inscrever-se com Google</button>
+                <button class="btn btn-outline-dark w-100 my-2"><i class="bi bi-github"></i>  Inscrever-se com GitHub</button>
+                <p class="text-center my-2 d-flex align-items-center">
+                    <span style="flex-grow: 1; height: 1px; background-color: currentColor; margin-right: 10px;"></span>
+                    ou
+                    <span style="flex-grow: 1; height: 1px; background-color: currentColor; margin-left: 10px;"></span>
+                </p>
+
                 <button class="btn btn-primary w-100 my-2">Criar conta</button>
-                <p class="text-center my-2">Já tens uma conta? <a href="app/login">Entrar</a></p>
+                <p class="text-center my-2">Já tens uma conta? <a href="app/login" style="color: #f8db27; font-weight: bold;">Entrar</a></p>
             </div>
           </div>
         </div>
+        <div class="ver-mais">
+            <i class="bi bi-chevron-down" id="verMais"></i>
+            <p>VER MAIS</p>
+        </div>
+
     </section>
 
     <!-- Seção Sobre -->
-    <section id="about">
+    <section id="about" class="white hidden-section">
         <h2>O que é o TalkSpot?</h2>
         <p>O TalkSpot é a rede social que mais cresce no mundo, com mais de 1 milhão de usuários ativos. Aqui, você pode compartilhar posts, comentar, interagir e se conectar com pessoas de todo o planeta. Tudo isso em uma plataforma simples, segura e divertida.</p>
     </section>
 
     <!-- Seção Estatísticas -->
-    <section id="stats">
+    <section id="stats" class="hidden-section">
         <h2>TalkSpot em Números</h2>
         <p>1 milhão de usuários ativos</p>
         <p>Crescimento de 200% nos últimos 6 meses</p>
@@ -96,14 +147,14 @@
     </section>
 
     <!-- Seção Depoimentos -->
-    <section id="testimonials">
+    <section id="testimonials" class="white hidden-section">
         <h2>O que nossos usuários dizem</h2>
         <p>"O TalkSpot mudou a forma como me conecto com meus amigos. Adoro a simplicidade e a interação!" – João Silva</p>
         <p>"Finalmente uma rede social que prioriza a experiência do usuário. Recomendo a todos!" – Maria Souza</p>
     </section>
 
     <!-- Seção Call-to-Action Final -->
-    <section id="cta">
+    <section id="cta" class="hidden-section">
         <h2>Junte-se à comunidade TalkSpot hoje!</h2>
         <p>Cadastre-se agora e comece a compartilhar suas ideias com o mundo.</p>
         <a href="/signup" class="btn btn-primary">Cadastre-se</a>
