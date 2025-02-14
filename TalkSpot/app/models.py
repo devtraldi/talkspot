@@ -31,3 +31,11 @@ class Comment(models.Model):
 
     def __str__(self):
         return f'Comment by {self.author.username} on {self.post.title}'
+
+
+class Quote(models.Model):
+    text = models.TextField()
+    character = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f'"{self.text}" - {self.character}'

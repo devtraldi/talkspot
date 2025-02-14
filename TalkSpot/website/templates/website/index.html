@@ -65,6 +65,46 @@
                 }
             });
         });
+
+        // Footer
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById('submit').addEventListener('click', getQuote);
+            getQuote(); // Carrega uma citação ao carregar a página
+            setInterval(getQuote, 15000); // Troca de citação a cada 15 segundos
+        });
+
+        function getQuote() {
+            fetch('/get-quote/')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Erro ao buscar citação.");
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.error) {
+                        throw new Error(data.error); // Exibe erros do backend
+                    }
+                    document.getElementById("quote").innerHTML = data.text;
+                    document.getElementById("author").innerHTML = data.character;
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    document.getElementById("quote").innerHTML = "Erro ao carregar a citação.";
+                    document.getElementById("author").innerHTML = "";
+                });
+        }
+
+        function shareQuote() {
+            var outputQuote = document.getElementById("quote").innerHTML;
+            var outputAuthor = document.getElementById("author").innerHTML;
+            window.open(
+                "https://twitter.com/intent/tweet?text=" +
+                encodeURIComponent('"' + outputQuote + '"' + " -- " + outputAuthor) +
+                "&hashtags=quotes&via=loudblkgrl"
+            );
+        }
+
     </script>
 
 </head>
@@ -238,6 +278,29 @@
     <p>Cadastre-se agora e comece a compartilhar suas ideias com o mundo.</p>
     <a href="/signup" class="btn btn-primary">Cadastre-se</a>
     <a href="/login" class="btn btn-secondary">Login</a>
+</section>
+
+<!-- Seção Random Quotes -->
+<section id="quoteSection" class="bg-transparent pb-5 text-info">
+    <div class="container">
+        <div class="col-md-6 p-3 m-auto">
+            <h1 class="text-center text-warning">Inspire-se com citações dos Simpsons</h1>
+        </div>
+        <div class="card border-transparent text-dark mb-3 mr-auto py-3" id="quoteCard">
+            <div class="card-body bg-transparent">
+                <blockquote class="blockquote text-center mb-0">
+                    <span class="quote-icon-left"><i class="bi bi-quote"></i></span>
+                    <p id="quote" class="quote-text"></p>
+                    <footer class="blockquote-footer mt-2" id="author"></footer>
+                    <span class="quote-icon-right"><i class="bi bi-quote"></i></span>
+                </blockquote>
+            </div>
+            <div class="ml-auto p-4 mt-2 text-right">
+                <button class="btn btn-outline-info" id="submit">Próxima citação</button>
+                <a href="/app/" class="btn btn-outline-info">Compartilhe no TalkSpot</a>
+            </div>
+        </div>
+    </div>
 </section>
 
 <!-- Footer -->

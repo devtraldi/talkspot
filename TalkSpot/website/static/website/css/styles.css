@@ -126,3 +126,60 @@ footer {
     border-color: #2f64d6;
     color: #2f64d6;
 }
+
+/* Animação do fundo e estilo da seção de citações */
+#quoteSection {
+    animation: slide 30s linear infinite alternate;
+    background-image: url("https://vignette.wikia.nocookie.net/simpsons/images/b/b7/Simspons_Clouds.jpg/revision/latest/scale-to-width-down/1024?cb=20100824223324");
+    background-repeat: repeat;
+    padding: 20px 0;
+}
+
+.quote-icon-left {
+    font-size: 2rem;
+    font-weight: bold;
+    position: absolute;
+    left: 10px;
+    top: 10px;
+}
+
+.quote-icon-right {
+    font-size: 2rem;
+    font-weight: bold;
+    position: absolute;
+    right: 10px;
+    bottom: 30%;
+}
+
+.quote-text {
+    font-size: 1.5rem;
+    font-weight: normal;
+    margin: 20px 0;
+}
+
+#author {
+    background-color: transparent !important;
+    font-size: 1.2rem;
+    color: #6c757d;
+}
+
+#quoteCard {
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+    padding: 20px;
+}
+
+.text-right {
+    text-align: right;
+}
+
+@keyframes slide {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: 0 50%;
+    }
+}

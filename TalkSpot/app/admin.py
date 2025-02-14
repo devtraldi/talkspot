@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User, Post, Comment
+from .models import User, Post, Comment, Quote
 
 
 @admin.register(User)
@@ -45,3 +45,24 @@ class CommentAdmin(admin.ModelAdmin):
         return obj.content[:50] + '...' if len(obj.content) > 50 else obj.content
 
     content_preview.short_description = 'Content Preview'
+
+
+@admin.register(Quote)
+class QuoteAdmin(admin.ModelAdmin):
+    # Campos exibidos na lista de citações
+    list_display = ('content_preview', 'character')  # Removi 'created_at'
+
+    # Filtros laterais (agora como uma lista)
+    list_filter = ('character',)  # Adicione uma vírgula para transformar em tupla
+
+    # Campos de pesquisa
+    search_fields = ('text', 'character')
+
+    # Ordenação padrão
+    ordering = ('character',)  # Ordena por personagem
+
+    # Função para reduzir a quantidade de caracteres exibidos
+    def content_preview(self, obj):
+        return obj.text[:100] + '...' if len(obj.text) > 100 else obj.text
+
+    content_preview.short_description = 'Quote Preview'  # Nome da coluna na lista

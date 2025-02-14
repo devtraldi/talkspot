@@ -2,7 +2,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseForbidden
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from .models import Post, Comment
+from .models import Post, Comment, Quote
+from django.http import JsonResponse
+import random
 
 
 def index(request):
@@ -118,3 +120,4 @@ def like_post(request, post_id):
         post.likes.add(request.user)  # Curtir
 
     return redirect('app_index')
+
