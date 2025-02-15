@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -132,3 +133,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Default user
 
 AUTH_USER_MODEL = 'app.User'
+
+# Configurações para arquivos de mídia
+MEDIA_URL = '/media/'  # URL base para servir arquivos de mídia
+MEDIA_ROOT = BASE_DIR / 'media'  # Correto se BASE_DIR for um objeto Path

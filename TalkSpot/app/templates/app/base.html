@@ -28,12 +28,11 @@
             <a class="navbar-brand" href="{% url 'app_index' %}">TalkSpot</a>
             <div class="d-flex">
                 <span class="navbar-text me-3">A message</span>
-                <a href="#" class="btn btn-primary">A button</a>
+                <a href="{% url 'app_logout' %}" class="btn btn-danger">Logout</a>
             </div>
         </div>
     </nav>
-    <!-- Logout -->
-    <a href="{% url 'app_logout' %}">(Logout)</a>
+
 
     <!-- Content -->
     {% block content %}

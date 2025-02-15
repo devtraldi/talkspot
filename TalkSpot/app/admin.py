@@ -4,7 +4,7 @@ from .models import User, Post, Comment, Quote
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('username', 'first_name', 'last_name', 'is_staff', 'email', 'is_active', 'date_joined', 'is_superuser')
+    list_display = ('username', 'first_name', 'last_name', 'is_staff', 'email', 'is_active', 'date_joined', 'is_superuser', 'profile_picture')
     list_filter = ('is_active', 'is_superuser', 'date_joined')
     search_fields = ('username', 'first_name', 'last_name', 'email')
     ordering = ('username',)

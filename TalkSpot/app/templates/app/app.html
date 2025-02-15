@@ -1,8 +1,8 @@
 {% extends 'app/base.html' %}
 
 {% block content %}
+{% load static %}
 <div class="container">
-    <h1 class="my-5">Todos os Posts</h1>
 
     <!-- Formulário para adicionar post -->
     <div class="mt-5">
@@ -26,50 +26,52 @@
 
         {% for post in posts %}
 
-        <li class="list-group-item">
-            <a href="{% url 'post_list' post.id %}">{{ post.title }}</a>
-            <small class="text-muted">Postado por {{ post.author.username }} em {{ post.created_at }}</small>
+        <li class="list-group-item d-flex">
+            <!-- Coluna da foto -->
+            <div class="me-3">
+                {% if post.author.profile_picture %}
+                <img src="{{ post.author.profile_picture.url }}" class="rounded-circle" width="50" height="50">
+                {% else %}
+                <img src="{% static 'app/images/padrao.jpg' %}" class="rounded-circle" width="50" height="50">
+                {% endif %}
+            </div>
+
+            <!-- Coluna do post -->
+            <div>
+                <a href="{% url 'post_list' post.id %}">{{ post.title }}</a>
+                <small class="text-muted">Postado por {{ post.author.username }} em {{ post.created_at }}</small>
 
 
-            <!-- Botão de curtir -->
-            <form method="post" action="{% url 'like_post' post.id %}" class="like-form">
-                {% csrf_token %}
-                <button type="submit" class="like-button">
-                    <i class="bi {% if request.user in post.likes.all %}bi-heart-fill{% else %}bi-heart{% endif %}"></i>
-                </button>
-                <span class="like-count">({{ post.total_likes }})</span>
-            </form>
+                <!-- Botão de curtir -->
+                <form method="post" action="{% url 'like_post' post.id %}" class="like-form">
+                    {% csrf_token %}
+                    <button type="submit" class="like-button">
+                        <i class="bi {% if request.user in post.likes.all %}bi-heart-fill{% else %}bi-heart{% endif %}"></i>
+                    </button>
+                    <span class="like-count">({{ post.total_likes }})</span>
+                </form>
+                <!-- Botão de comentários -->
+                <p>Comentários: {{ post.comments.count }}</p>
 
-            <form action="{% url 'like_post' post.id %}" method="post" target="_self">
-                {% csrf_token %}
-                <button type="submit">
-                    {% if request.user in post.likes.all %}
-                        Descurtir
-                    {% else %}
-                        Curtir
-                    {% endif %}
-                </button>
-            </form>
-
-
-            <p>Likes: {{ post.likes.count }}</p>
-            <p>Comentários: {{ post.comments.count }}</p>
-
-            <!-- Botão de editar que abre em nova página -->
-            {% if request.user == post.author %}
+                <!-- Botão de editar que abre em nova página -->
+                {% if request.user == post.author %}
                 <a href="{% url 'edit_post' post.id %}" class="btn btn-warning btn-sm float-end">Editar</a>
-            {% endif %}
+                {% endif %}
 
-            <!-- Botão de deletar que abre o modal para double check confirmar -->
-            {% if request.user == post.author or request.user.is_staff %}
-                <button type="button" class="btn btn-danger btn-sm float-end me-2" data-bs-toggle="modal" data-bs-target="#deleteModal{{ post.id }}">
+                <!-- Botão de deletar que abre o modal para double check confirmar -->
+                {% if request.user == post.author or request.user.is_staff %}
+                <button type="button" class="btn btn-danger btn-sm float-end me-2" data-bs-toggle="modal"
+                        data-bs-target="#deleteModal{{ post.id }}">
                     Deletar
                 </button>
-            {% endif %}
+                {% endif %}
+            </div>
         </li>
 
+
         <!-- Modal de confirmação deletar post -->
-        <div class="modal fade" id="deleteModal{{ post.id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ post.id }}" aria-hidden="true">
+        <div class="modal fade" id="deleteModal{{ post.id }}" tabindex="-1"
+             aria-labelledby="deleteModalLabel{{ post.id }}" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -77,7 +79,8 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        Tem certeza que deseja excluir o post "{{ post.title }}"? Todos os comentários serão excluídos junto com o post.
+                        Tem certeza que deseja excluir o post "{{ post.title }}"? Todos os comentários serão excluídos
+                        junto com o post.
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
