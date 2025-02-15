@@ -260,17 +260,116 @@
 <!-- Seção Estatísticas -->
 <section id="stats" class="hidden-section">
     <h2>TalkSpot em Números</h2>
+    <div class="stats-container">
+        <!-- Card 1 -->
+        <div class="stats-card" style="background-color: rgba(255, 213, 79, 0.8);">
+            <h3>#1</h3>
+            <p>em Springfield</p>
+            <a href="#" class="stats-link">→</a>
+        </div>
+        <!-- Card 2 -->
+        <div class="stats-card" style="background-color: rgba(255, 87, 34, 0.8);">
+            <h3>200%</h3>
+            <p>crescimento</p>
+            <a href="#" class="stats-link">→</a>
+        </div>
+        <!-- Card 3 -->
+        <div class="stats-card" style="background-color: rgba(76, 175, 80, 0.8);">
+            <h3>5M+</h3>
+            <p>posts compartilhados</p>
+            <a href="#" class="stats-link">→</a>
+        </div>
+        <!-- Card 4 -->
+        <div class="stats-card" style="background-color: rgba(33, 150, 243, 0.8);">
+            <h3>10.000+</h3>
+            <p>comentários feitos</p>
+            <a href="#" class="stats-link">→</a>
+        </div>
+    </div>
+</section>
+
+
+<!-- Seção Estatísticas
+<section id="stats" class="hidden-section">
+    <h2>TalkSpot em Números</h2>
     <p>1 milhão de usuários ativos</p>
     <p>Crescimento de 200% nos últimos 6 meses</p>
     <p>Mais de 5 milhões de posts compartilhados</p>
-</section>
+</section> -->
 
 <!-- Seção Depoimentos -->
+<section id="testimonials" class="white hidden-section">
+    <div class="container">
+        <h2 class="text-center mb-5">O que nossos usuários dizem</h2>
+
+        <!-- Carousel de Depoimentos -->
+        <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
+            <!-- Indicadores -->
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+            </div>
+
+            <!-- Slides -->
+            <div class="carousel-inner">
+                <!-- Depoimento 1 - Ned Flanders -->
+                <div class="carousel-item active">
+                    <div class="testimonial-card text-center">
+                        <img src="{% static 'website/images/ned_flanders.png' %}" alt="Ned Flanders" class="testimonial-img rounded-circle">
+                        <p class="testimonial-text">"O TalkSpot é uma bênção! Finalmente um lugar onde posso compartilhar minhas ideias e me conectar com meus vizinhos de Springfield. Okily dokily!"</p>
+                        <p class="testimonial-author">– Ned Flanders</p>
+                    </div>
+                </div>
+
+                <!-- Depoimento 2 - Diretor Skinner -->
+                <div class="carousel-item">
+                    <div class="testimonial-card text-center">
+                        <img src="{% static 'website/images/skinner.png' %}" alt="Diretor Skinner" class="testimonial-img rounded-circle">
+                        <p class="testimonial-text">"O TalkSpot é uma ferramenta incrível para educadores e alunos. Agora posso me comunicar melhor com a comunidade escolar. Excelente!"</p>
+                        <p class="testimonial-author">– Diretor Skinner</p>
+                    </div>
+                </div>
+
+                <!-- Depoimento 3 - Marge Simpson -->
+                <div class="carousel-item">
+                    <div class="testimonial-card text-center">
+                        <img src="{% static 'website/images/marge.png' %}" alt="Marge Simpson" class="testimonial-img rounded-circle">
+                        <p class="testimonial-text">"Adoro o TalkSpot! É tão fácil compartilhar receitas e dicas de jardinagem com minhas amigas. Recomendo a todas as mães de Springfield!"</p>
+                        <p class="testimonial-author">– Marge Simpson</p>
+                    </div>
+                </div>
+
+                <!-- Depoimento 4 - Krusty, o Palhaço -->
+                <div class="carousel-item">
+                    <div class="testimonial-card text-center">
+                        <img src="{% static 'website/images/krusty.png' %}" alt="Krusty, o Palhaço" class="testimonial-img rounded-circle">
+                        <p class="testimonial-text">"O TalkSpot é o máximo! Agora posso promover meus shows e interagir com meus fãs. É quase tão bom quanto dinheiro fácil!"</p>
+                        <p class="testimonial-author">– Krusty, o Palhaço</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Controles (setas) -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Anterior</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Próximo</span>
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- Seção Depoimentos
 <section id="testimonials" class="white hidden-section">
     <h2>O que nossos usuários dizem</h2>
     <p>"O TalkSpot mudou a forma como me conecto com meus amigos. Adoro a simplicidade e a interação!" – João Silva</p>
     <p>"Finalmente uma rede social que prioriza a experiência do usuário. Recomendo a todos!" – Maria Souza</p>
-</section>
+</section> -->
 
 <!-- Seção Call-to-Action Final -->
 <section id="cta" class="hidden-section">
@@ -281,7 +380,7 @@
 </section>
 
 <!-- Seção Random Quotes -->
-<section id="quoteSection" class="bg-transparent pb-5 text-info">
+<section id="quoteSection" class="bg-transparent pb-5 text-info hidden-section">
     <div class="container">
         <div class="col-md-6 p-3 m-auto">
             <h1 class="text-center text-warning">Inspire-se com citações dos Simpsons</h1>
@@ -300,6 +399,7 @@
                 <a href="/app/" class="btn btn-outline-info">Compartilhe no TalkSpot</a>
             </div>
         </div>
+
     </div>
 </section>
 

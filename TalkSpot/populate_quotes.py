@@ -1,3 +1,11 @@
+"""
+rodar no terminal
+python manage.py shell
+exec(open('populate_quotes.py', encoding="utf-8").read())
+"""
+
+
+# -*- coding: utf-8 -*-
 import json
 from app.models import Quote  # Substitua "yourapp" pelo nome do seu app
 

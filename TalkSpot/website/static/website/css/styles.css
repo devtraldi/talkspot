@@ -87,6 +87,96 @@ footer {
     color: #2f64d6;
 }
 
+/* Seção TalkSpot em números */
+#stats {
+    padding: 40px 20px;
+    text-align: center;
+    color: white;
+}
+
+.stats-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.stats-card {
+    width: 200px;
+    height: 200px;
+    border-radius: 15px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.stats-card:hover {
+    transform: scale(1.05);
+}
+
+.stats-card h3 {
+    font-size: 2.5rem;
+    margin: 0;
+    color: black;
+    text-align: center;
+}
+
+.stats-card p {
+    font-size: 1rem;
+    margin: 0;
+    color: black;
+    text-align: center;
+}
+
+.stats-link {
+    font-size: 1.5rem;
+    color: white;
+    text-decoration: none;
+    align-self: flex-end;
+    transition: color 0.3s ease;
+}
+
+.stats-link:hover {
+    color: #ffeb3b;
+}
+
+/* Seção de depoimentos */
+#testimonials {
+    padding: 60px 0;
+    background-color: white;
+}
+
+.testimonial-card {
+    background-color: #f8f9fa;
+    border-radius: 15px;
+    padding: 30px;
+    margin: 0 auto;
+    max-width: 600px;
+}
+
+.testimonial-img {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 20px;
+    border: 3px solid #6a1b9a;
+}
+
+.testimonial-text {
+    font-size: 1.2rem;
+    font-style: italic;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.testimonial-author {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #6a1b9a;
+}
 
 .gf {
     color: #ffffff;
@@ -129,10 +219,10 @@ footer {
 
 /* Animação do fundo e estilo da seção de citações */
 #quoteSection {
-    animation: slide 30s linear infinite alternate;
-    background-image: url("https://vignette.wikia.nocookie.net/simpsons/images/b/b7/Simspons_Clouds.jpg/revision/latest/scale-to-width-down/1024?cb=20100824223324");
+    animation: slide 50s linear infinite alternate;
+    background-image: url("/static/website/images/Simspons_Clouds.jpg");
     background-repeat: repeat;
-    padding: 20px 0;
+    padding: 10px 0;
 }
 
 .quote-icon-left {
@@ -154,7 +244,7 @@ footer {
 .quote-text {
     font-size: 1.5rem;
     font-weight: normal;
-    margin: 20px 0;
+    margin: 10px 0;
 }
 
 #author {
@@ -168,7 +258,7 @@ footer {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     position: relative;
-    padding: 20px;
+    padding: 10px;
 }
 
 .text-right {
@@ -176,10 +266,15 @@ footer {
 }
 
 @keyframes slide {
-    from {
+    0% {
         background-position: 0 0;
     }
-    to {
+    50% {
         background-position: 0 50%;
     }
+    100% {
+        background-position: 0 0;
+    }
 }
+
+
