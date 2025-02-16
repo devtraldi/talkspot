@@ -1,0 +1,17 @@
+{% extends "app/base.html" %}
+
+{% block content %}
+  <h2>Seus Bookmarks</h2>
+  {% if posts %}
+    <ul>
+      {% for post in posts %}
+        <li>
+          <a href="{% url 'post_list' post.id %}">{{ post.title }}</a>
+          <p>Por {{ post.author }} em {{ post.created_at|date:"d/m/Y" }}</p>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>Você ainda não salvou nenhum post.</p>
+  {% endif %}
+{% endblock %}

@@ -119,5 +119,22 @@ def like_post(request, post_id):
     else:
         post.likes.add(request.user)  # Curtir
 
-    return redirect('app_index')
+    return JsonResponse({"likes": post.likes.count()})
 
+
+def bookmark_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+
+    if request.user in post.bookmarks.all():
+        post.bookmarks.remove(request.user)  # Remover dos favoritos
+        bookmarked = False
+    else:
+        post.bookmarks.add(request.user)  # Adicionar aos favoritos
+        bookmarked = True
+
+    return JsonResponse({"bookmarked": bookmarked})
+
+
+def bookmarked_posts(request):
+    posts = request.user.bookmarked_posts.all()
+    return render(request, 'app/bookmarked_posts.html', {'posts': posts})
