@@ -22,3 +22,7 @@ def get_random_quote(request):
             return JsonResponse({'error': 'Nenhuma citação encontrada.'}, status=404)
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
+
+
+def bart_game(request):
+    return render(request, 'website/bart_game.html')

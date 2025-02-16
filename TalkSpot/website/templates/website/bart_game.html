@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bart Skate Game</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #87CEEB;
+        }
+        canvas {
+            border: 2px solid black;
+            background-color: white;
+        }
+        #score {
+            font-size: 20px;
+            margin-top: 10px;
+        }
+        #gameOverScreen {
+            display: none;
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #ff4500;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #cc3700;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bart Skate Game</h1>
+    <canvas id="gameCanvas"></canvas>
+    <p>Pressione <strong>espaço</strong> para pular os obstáculos!</p>
+    <p id="score">Pontuação: 0</p>
+    <div id="gameOverScreen">
+        <h2>Game Over!</h2>
+        <p id="finalScore"></p>
+        <button onclick="restartGame()">Reiniciar</button>
+    </div>
+
+    <script>
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+        canvas.width = 800;
+        canvas.height = 300;
+
+        let score = 0;
+        let gameRunning = true;
+
+        const bart = {
+            x: 50,
+            y: 200,
+            width: 50,
+            height: 50,
+            vy: 0,
+            gravity: 1.2,
+            jumpPower: -18,
+            onGround: true
+        };
+
+        let obstacles = [{ x: canvas.width, y: 220, width: 30, height: 30 }];
+
+        function drawBart() {
+            ctx.fillStyle = "yellow";
+            ctx.fillRect(bart.x, bart.y, bart.width, bart.height);
+        }
+
+        function drawObstacles() {
+            ctx.fillStyle = "red";
+            obstacles.forEach(obstacle => {
+                ctx.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
+            });
+        }
+
+        function update() {
+            if (!gameRunning) return;
+
+            bart.y += bart.vy;
+            bart.vy += bart.gravity;
+
+            if (bart.y >= 200) {
+                bart.y = 200;
+                bart.vy = 0;
+                bart.onGround = true;
+            }
+
+            obstacles.forEach(obstacle => {
+                obstacle.x -= 5;
+                if (obstacle.x + obstacle.width < 0) {
+                    obstacle.x = canvas.width;
+                    score++;
+                    document.getElementById("score").innerText = `Pontuação: ${score}`;
+                }
+            });
+
+            obstacles.forEach(obstacle => {
+                if (
+                    bart.x < obstacle.x + obstacle.width &&
+                    bart.x + bart.width > obstacle.x &&
+                    bart.y < obstacle.y + obstacle.height &&
+                    bart.y + bart.height > obstacle.y
+                ) {
+                    gameOver();
+                }
+            });
+        }
+
+        function gameOver() {
+            gameRunning = false;
+            document.getElementById("gameOverScreen").style.display = "block";
+            document.getElementById("finalScore").innerText = `Você fez ${score} pontos!`;
+        }
+
+        function restartGame() {
+            score = 0;
+            gameRunning = true;
+            bart.y = 200;
+            bart.vy = 0;
+            bart.onGround = true;
+            obstacles = [{ x: canvas.width, y: 220, width: 30, height: 30 }];
+            document.getElementById("score").innerText = `Pontuação: ${score}`;
+            document.getElementById("gameOverScreen").style.display = "none";
+            gameLoop();
+        }
+
+        function jump(event) {
+            if (event.code === "Space" && bart.onGround && gameRunning) {
+                bart.vy = bart.jumpPower;
+                bart.onGround = false;
+                event.preventDefault(); // Evita que o espaço role a página
+            }
+        }
+
+        document.addEventListener("keydown", jump);
+
+        function gameLoop() {
+            if (!gameRunning) return;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawBart();
+            drawObstacles();
+            update();
+            requestAnimationFrame(gameLoop);
+        }
+
+        gameLoop();
+    </script>
+</body>
+</html>
