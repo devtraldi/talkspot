@@ -1,38 +1,4 @@
-/* Estilos para a navbar vertical */
-.navbar-vertical {
-    width: 80px;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding-top: 20px;
-    background-color: #343a40; /* Cor de fundo da navbar */
-}
 
-/* Estilos para os ícones */
-.nav-link {
-    margin-bottom: 20px;
-    color: white;
-    text-align: center;
-}
-
-.nav-link:hover {
-    color: #007bff; /* Cor ao passar o mouse */
-}
-
-/* Ajustes para o dropdown */
-.dropdown-menu {
-    margin-left: -50px; /* Ajuste a posição do dropdown */
-}
-
-/* Espaçamento para o conteúdo principal */
-.container-fluid {
-    padding-left: 80px; /* Ajuste para compensar a navbar vertical */
-}
 
 
 .like-form {
