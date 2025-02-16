@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bart Skate Game</title>
+    {% load static %}
+
     <style>
         body {
             text-align: center;
@@ -41,6 +43,8 @@
     <canvas id="gameCanvas"></canvas>
     <p>Pressione <strong>espaço</strong> para pular os obstáculos!</p>
     <p id="score">Pontuação: 0</p>
+    <p id="highScore">Recorde: 0</p>
+
     <div id="gameOverScreen">
         <h2>Game Over!</h2>
         <p id="finalScore"></p>
@@ -59,20 +63,20 @@
         const bart = {
             x: 50,
             y: 200,
-            width: 50,
-            height: 50,
+            width: 100,
+            height: 100,
             vy: 0,
-            gravity: 1.2,
-            jumpPower: -18,
+            gravity: 1.0,
+            jumpPower: -20,
             onGround: true
         };
 
-        let obstacles = [{ x: canvas.width, y: 220, width: 30, height: 30 }];
+        let obstacles = [{ x: canvas.width, y: 220, width: 10, height: 60 }];
 
         function drawBart() {
-            ctx.fillStyle = "yellow";
-            ctx.fillRect(bart.x, bart.y, bart.width, bart.height);
+            ctx.drawImage(bartImage, bart.x, bart.y, bart.width, bart.height);
         }
+
 
         function drawObstacles() {
             ctx.fillStyle = "red";
@@ -118,7 +122,21 @@
             gameRunning = false;
             document.getElementById("gameOverScreen").style.display = "block";
             document.getElementById("finalScore").innerText = `Você fez ${score} pontos!`;
+            updateHighScore();
+            document.getElementById("highScore").innerText = `Recorde: ${highScore}`;
+
         }
+
+        let highScore = localStorage.getItem("highScore") || 0;
+        document.getElementById("highScore").innerText = `Recorde: ${highScore}`;
+
+        function updateHighScore() {
+            if (score > highScore) {
+                highScore = score;
+                localStorage.setItem("highScore", highScore);
+            }
+        }
+
 
         function restartGame() {
             score = 0;
@@ -126,7 +144,7 @@
             bart.y = 200;
             bart.vy = 0;
             bart.onGround = true;
-            obstacles = [{ x: canvas.width, y: 220, width: 30, height: 30 }];
+            obstacles = [{ x: canvas.width, y: 220, width: 10, height: 60 }];
             document.getElementById("score").innerText = `Pontuação: ${score}`;
             document.getElementById("gameOverScreen").style.display = "none";
             gameLoop();
@@ -141,6 +159,11 @@
         }
 
         document.addEventListener("keydown", jump);
+
+        const bartImage = new Image();
+        bartImage.src = "{% static 'website/images/bart_skate2.jpg' %}";
+
+
 
         function gameLoop() {
             if (!gameRunning) return;
