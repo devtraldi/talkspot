@@ -6,8 +6,10 @@ from .models import Post, Comment, Quote
 from django.http import JsonResponse
 import random
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 User = get_user_model()
+
 
 def cadastro(request):
     if request.method == 'POST':
@@ -51,8 +53,7 @@ def cadastro(request):
     return render(request, 'app/cadastro.html')
 
 
-
-
+@login_required(login_url='app_login')
 def index(request):
     posts = Post.objects.all().order_by('-created_at')  # Busca todos os posts, ordenados por data
     return render(request, 'app/app.html', {'posts': posts})
@@ -75,11 +76,13 @@ def app_logout(request):
     return redirect('app_login')
 
 
+@login_required(login_url='app_login')
 def post_list(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     return render(request, 'app/post.html', {'post': post})
 
 
+@login_required(login_url='app_login')
 def create_post(request):
     if request.user.is_staff:
         return HttpResponseForbidden("Você não tem permissão para criar post.")
@@ -92,6 +95,7 @@ def create_post(request):
     return render(request, 'app/create_post.html')
 
 
+@login_required(login_url='app_login')
 def edit_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     # Verifica se o usuário é o autor do post
@@ -105,6 +109,7 @@ def edit_post(request, post_id):
     return render(request, 'app/edit_post.html', {'post': post})
 
 
+@login_required(login_url='app_login')
 def delete_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
 
@@ -119,6 +124,7 @@ def delete_post(request, post_id):
     return redirect('app_index')
 
 
+@login_required(login_url='app_login')
 def create_comment(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     if request.user.is_staff:
@@ -130,6 +136,7 @@ def create_comment(request, post_id):
     return redirect('post_list', post_id=post.id)
 
 
+@login_required(login_url='app_login')
 def edit_comment(request, post_id, comment_id):
     comment = get_object_or_404(Comment, id=comment_id)
     # Verifica se o usuário é o autor do comentário
@@ -142,6 +149,7 @@ def edit_comment(request, post_id, comment_id):
     return render(request, 'app/edit_comment.html', {'comment': comment})
 
 
+@login_required(login_url='app_login')
 def delete_comment(request, post_id, comment_id):
     comment = get_object_or_404(Comment, id=comment_id)
 
@@ -156,7 +164,12 @@ def delete_comment(request, post_id, comment_id):
     return redirect('post_list', post_id=post_id)
 
 
+@login_required(login_url='app_login')
 def like_post(request, post_id):
+    if request.user.is_staff:
+        return JsonResponse({"error": "Usuários staff não podem curtir posts."}, status=403)
+
+
     post = get_object_or_404(Post, id=post_id)
 
     # Verifica se o usuário já curtiu o post
@@ -168,6 +181,7 @@ def like_post(request, post_id):
     return JsonResponse({"likes": post.likes.count()})
 
 
+@login_required(login_url='app_login')
 def bookmark_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
 
@@ -181,6 +195,7 @@ def bookmark_post(request, post_id):
     return JsonResponse({"bookmarked": bookmarked})
 
 
+@login_required(login_url='app_login')
 def bookmarked_posts(request):
     posts = request.user.bookmarked_posts.all()
     return render(request, 'app/bookmarked_posts.html', {'posts': posts})

@@ -98,13 +98,21 @@
                     <div class="d-flex align-items-center mt-2">
 
                         <!-- Curtir -->
-                        <form class="like-form" data-post-id="{{ post.id }}">
-                            {% csrf_token %}
-                            <button type="button" class="icon-btn like-button me-3">
-                                <i class="bi {% if request.user in post.likes.all %}bi-heart-fill text-danger{% else %}bi-heart{% endif %}"></i>
+
+                        {% if not request.user.is_staff %}
+                            <form class="like-form" data-post-id="{{ post.id }}">
+                                {% csrf_token %}
+                                <button type="button" class="icon-btn like-button me-3">
+                                    <i class="bi {% if request.user in post.likes.all %}bi-heart-fill text-danger{% else %}bi-heart{% endif %}"></i>
+                                    <span class="like-count">{{ post.total_likes }}</span>
+                                </button>
+                            </form>
+                        {% else %}
+                            <button type="button" class="icon-btn like-button me-3" disabled title="Usuários staff não podem curtir posts.">
+                                <i class="bi bi-heart"></i>
                                 <span class="like-count">{{ post.total_likes }}</span>
                             </button>
-                        </form>
+                        {% endif %}
 
                         <!-- Comentários -->
                         <a href="{% url 'post_list' post.id %}" class="icon-btn comment-btn me-3 like-count">
