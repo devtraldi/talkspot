@@ -31,9 +31,9 @@
                 <!-- Coluna da foto -->
                 <div class="col-auto d-flex align-items-center">
                     {% if post.author.profile_picture %}
-                        <img src="{{ post.author.profile_picture.url }}" class="rounded-circle" width="50" height="50">
+                        <a href="{% url 'user_posts' post.author %}" title=""><img src="{{ post.author.profile_picture.url }}" class="rounded-circle" width="50" height="50"></a>
                     {% else %}
-                        <img src="{% static 'app/images/padrao.jpg' %}" class="rounded-circle" width="50" height="50">
+                        <a href="{% url 'user_posts' post.author %}" title=""><img src="{% static 'app/images/padrao.jpg' %}" class="rounded-circle" width="50" height="50"></a>
                     {% endif %}
                 </div>
 
@@ -89,10 +89,10 @@
 
 
                     <!-- Título do Post -->
-                    <h5 class="fw-bold mb-1">{{ post.title }}</h5>
+                    <a href="{% url 'post_list' post.id %}" class="text-decoration-none" style="color: black"><h5 class="fw-bold mb-1">{{ post.title }}</h5></a>
 
                     <!-- Conteúdo do Post -->
-                    <p class="mb-2">{{ post.content }}</p>
+                    <a href="{% url 'post_list' post.id %}" class="text-decoration-none" style="color: black"><p class="mb-2">{{ post.content }}</p></a>
 
                     <!-- Ícones de interação -->
                     <div class="d-flex align-items-center mt-2">
