@@ -199,3 +199,9 @@ def bookmark_post(request, post_id):
 def bookmarked_posts(request):
     posts = request.user.bookmarked_posts.all()
     return render(request, 'app/bookmarked_posts.html', {'posts': posts})
+
+@login_required(login_url='app_login')
+def user_posts(request, username):
+    user_profile = get_object_or_404(User, username=username)
+    posts = Post.objects.filter(author=user_profile).order_by('-created_at')
+    return render(request, 'app/user_posts.html', {'user_profile': user_profile, 'posts': posts})
