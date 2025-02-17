@@ -7,6 +7,7 @@ from django.http import JsonResponse
 import random
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.db.models import Count
 
 User = get_user_model()
 
@@ -57,6 +58,13 @@ def cadastro(request):
 def index(request):
     posts = Post.objects.all().order_by('-created_at')  # Busca todos os posts, ordenados por data
     return render(request, 'app/app.html', {'posts': posts})
+
+
+@login_required(login_url='app_login')
+def relevance(request):
+    # Annotate cada post com o número de curtidas e ordena por curtidas em ordem decrescente
+    posts = Post.objects.annotate(total_likes=Count('likes')).order_by('-total_likes')
+    return render(request, 'app/app_relevance.html', {'posts': posts})
 
 
 def app_login(request):
@@ -169,7 +177,6 @@ def like_post(request, post_id):
     if request.user.is_staff:
         return JsonResponse({"error": "Usuários staff não podem curtir posts."}, status=403)
 
-
     post = get_object_or_404(Post, id=post_id)
 
     # Verifica se o usuário já curtiu o post
@@ -199,6 +206,7 @@ def bookmark_post(request, post_id):
 def bookmarked_posts(request):
     posts = request.user.bookmarked_posts.all()
     return render(request, 'app/bookmarked_posts.html', {'posts': posts})
+
 
 @login_required(login_url='app_login')
 def user_posts(request, username):
