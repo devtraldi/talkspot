@@ -68,6 +68,7 @@ footer {
     opacity: 0;
     transform: translateY(50px);
     transition: opacity 0.6s ease, transform 0.6s ease;
+    padding: 150px 20px;
 }
 .visible-section {
     display: block;
@@ -89,7 +90,7 @@ footer {
 
 /* Seção TalkSpot em números */
 #stats {
-    padding: 40px 20px;
+    padding: 100px 20px;
     text-align: center;
     color: white;
 }
@@ -146,7 +147,7 @@ footer {
 
 /* Seção de depoimentos */
 #testimonials {
-    padding: 60px 0;
+    padding: 130px 20px;
     background-color: white;
 }
 
@@ -177,6 +178,14 @@ footer {
     font-weight: bold;
     color: #6a1b9a;
 }
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: blue;  /* Definindo a cor das setas */
+    width: 40px;  /* Ajustando a largura da seta */
+    height: 40px;  /* Ajustando a altura da seta */
+}
+
 
 .gf {
     color: #ffffff;
@@ -222,7 +231,7 @@ footer {
     animation: slide 50s linear infinite alternate;
     background-image: url("/static/website/images/Simspons_Clouds.jpg");
     background-repeat: repeat;
-    padding: 10px 0;
+    padding: 100px 20px;
 }
 
 .quote-icon-left {
