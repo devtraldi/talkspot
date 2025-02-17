@@ -1,0 +1,177 @@
+<div class="container">
+    <h2 class="text-center mb-4">Cadastro</h2>
+    <form method="post" enctype="multipart/form-data" id="cadastroForm" class="needs-validation" novalidate>
+        {% csrf_token %}
+        <div class="form-container">
+            <div class="form-group">
+                <label for="username" class="form-label">Username:</label>
+                <input type="text" class="form-control" id="username" name="username" required>
+                <div class="invalid-feedback" id="usernameError">
+                    Nome de usuário já existe.
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="password1" class="form-label">Password:</label>
+                <input type="password" class="form-control" id="password1" name="password1" required>
+            </div>
+            <div class="form-group">
+                <label for="password2" class="form-label">Confirm Password:</label>
+                <input type="password" class="form-control" id="password2" name="password2" required>
+                <div class="invalid-feedback" id="passwordError">
+                    As senhas não coincidem.
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email" class="form-label">Email:</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+                <div class="invalid-feedback" id="emailError">
+                    Email inválido ou já cadastrado.
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="first_name" class="form-label">First Name:</label>
+                <input type="text" class="form-control" id="first_name" name="first_name">
+            </div>
+            <div class="form-group">
+                <label for="last_name" class="form-label">Last Name:</label>
+                <input type="text" class="form-control" id="last_name" name="last_name">
+            </div>
+            <div class="form-group">
+                <label for="bio" class="form-label">Bio:</label>
+                <textarea class="form-control" id="bio" name="bio" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="profile_picture" class="form-label">Profile Picture:</label>
+                <input type="file" class="form-control-file" id="profile_picture" name="profile_picture">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary w-100 mb-3">Cadastrar</button>
+    </form>
+    <p class="text-center mt-3">Já tens cadastro? <a href="{% url 'app_login' %}" class="text-decoration-none">Faça login</a></p>
+</div>
+
+<style>
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 30px;
+        background-color: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        color: #343a40;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .form-container {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .form-label {
+        font-weight: 500;
+        color: #495057;
+    }
+
+    .form-control {
+        border-radius: 8px;
+        border: 1px solid #ced4da;
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .form-control:focus {
+        border-color: #80bdff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+        padding: 12px;
+        font-size: 16px;
+        border-radius: 8px;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    .invalid-feedback {
+        color: #dc3545;
+        font-size: 12px;
+        display: none; /* Esconde as mensagens de erro inicialmente */
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .text-decoration-none {
+        text-decoration: none;
+        color: #007bff;
+    }
+
+    .text-decoration-none:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<script>
+    document.getElementById('cadastroForm').addEventListener('submit', function (event) {
+        let isValid = true;
+
+        // Validação de senhas
+        const password1 = document.getElementById('password1').value;
+        const password2 = document.getElementById('password2').value;
+        const passwordError = document.getElementById('passwordError');
+
+        if (password1 !== password2) {
+            passwordError.style.display = 'block';
+            isValid = false;
+        } else {
+            passwordError.style.display = 'none';
+        }
+
+        // Validação de email
+        const email = document.getElementById('email').value;
+        const emailError = document.getElementById('emailError');
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailPattern.test(email)) {
+            emailError.style.display = 'block';
+            isValid = false;
+        } else {
+            emailError.style.display = 'none';
+        }
+
+        // Validação de username (simulação)
+        const username = document.getElementById('username').value;
+        const usernameError = document.getElementById('usernameError');
+
+        // Simulação de username já existente
+        const existingUsernames = ['admin', 'user123']; // Lista de usernames existentes
+        if (existingUsernames.includes(username)) {
+            usernameError.style.display = 'block';
+            isValid = false;
+        } else {
+            usernameError.style.display = 'none';
+        }
+
+        // Impede o envio do formulário se houver erros
+        if (!isValid) {
+            event.preventDefault();
+        }
+    });
+</script>

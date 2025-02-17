@@ -1,10 +1,56 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseForbidden
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib import messages
 from .models import Post, Comment, Quote
 from django.http import JsonResponse
 import random
+from django.contrib.auth.models import User
+
+User = get_user_model()
+
+def cadastro(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
+        email = request.POST.get('email')
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        bio = request.POST.get('bio')
+        profile_picture = request.FILES.get('profile_picture')
+
+        if password1 != password2:
+            messages.error(request, 'As senhas não coincidem.')
+            return redirect('cadastro')
+
+        if User.objects.filter(username=username).exists():
+            messages.error(request, 'Nome de usuário já existe.')
+            return redirect('cadastro')
+
+        if User.objects.filter(email=email).exists():
+            messages.error(request, 'Email já cadastrado.')
+            return redirect('cadastro')
+
+        user = User.objects.create_user(
+            username=username,
+            password=password1,
+            email=email,
+            first_name=first_name,
+            last_name=last_name
+        )
+        user.bio = bio
+        if profile_picture:
+            user.profile_picture = profile_picture
+        user.save()
+
+        login(request, user)
+        messages.success(request, 'Cadastro realizado com sucesso!')
+        return redirect('app_index')
+
+    return render(request, 'app/cadastro.html')
+
+
 
 
 def index(request):

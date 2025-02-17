@@ -5,6 +5,7 @@ urlpatterns = [
     path('', views.index, name='app_index'),
     path('login/', views.app_login, name='app_login'),
     path('logout/', views.app_logout, name='app_logout'),
+    path('cadastro/', views.cadastro, name='cadastro'),
     path('post/create/', views.create_post, name='create_post'),
     path('post/<int:post_id>/', views.post_list, name='post_list'),
     path('post/<int:post_id>/edit/', views.edit_post, name='edit_post'),
