@@ -3,23 +3,136 @@
 {% block content %}
 {% load static %}
 
-
-<!-- Formulário para adicionar post -->
-<div class="mt-5" style="max-width: 700px;">
-    <h2>Criar Novo Post</h2>
-    <form method="post" action="{% url 'create_post' %}">
-        {% csrf_token %}
-        <div class="mb-3">
-            <label for="title" class="form-label">Título</label>
-            <input type="text" class="form-control" id="title" name="title" required>
-        </div>
-        <div class="mb-3">
-            <label for="content" class="form-label">Conteúdo</label>
-            <textarea class="form-control" id="content" name="content" rows="2" required></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Criar Post</button>
-    </form>
+<!-- Botão Novo Post -->
+<div class="container" style="max-width: 700px;min-width: 180px;margin-left: 0px;margin-right: 0px;" align="right">
+        <button class="new-post-btn"  style="margin-bottom: 15px;" onclick="openModal()">+ New Post</button>
 </div>
 
+<!-- Modal Novo Post -->
+<div id="newPostModal" class="new-post-modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <h2 class="modal-title">Criar Novo Post</h2>
+        <form action="{% url 'create_post' %}" method="POST">
+            {% csrf_token %}
+            <label for="postTitle">Título:</label>
+            <input type="text" id="postTitle" name="title" required>
+
+            <label for="postContent">Conteúdo:</label>
+            <textarea id="postContent" name="content" required></textarea>
+
+            <button type="submit" class="new-post-btn">Postar</button>
+        </form>
+    </div>
+</div>
+
+<!-- Estilos -->
+<style>
+/* Botão estiloso */
+.new-post-container {
+    z-index: 1000;
+    padding: 50;
+}
+
+.new-post-btn {
+    background: #ffd90f;
+    color: #000;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: 3px solid #000;
+    border-radius: 50px;
+    box-shadow: 3px 3px 0px #000;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.new-post-btn:hover {
+    background: #ff9900;
+    box-shadow: 4px 4px 0px #000;
+    transform: translate(-2px, -2px);
+}
+
+/* Modal estiloso */
+.new-post-modal {
+    display: none;
+    position: fixed;
+    width: 30%;
+    min-width: 300px;
+    max-width: 400px;
+    top: 10%;
+    right: 20px;
+    transform: translate(0, -20px);
+    background: #fff;
+    border: 3px solid #000;
+    border-radius: 15px;
+    box-shadow: 5px 5px 0px #000;
+    padding: 15px;
+    z-index: 1001;
+    transition: all 0.3s ease-in-out;
+    opacity: 0;
+}
+
+
+/* Conteúdo do modal */
+.modal-content {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Botão de fechar */
+.close-btn {
+    align-self: flex-end;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: red;
+}
+
+/* Título do modal */
+.modal-title {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #333;
+}
+</style>
+
+<!-- Script -->
+<script>
+function openModal() {
+    let modal = document.getElementById("newPostModal");
+    let button = document.querySelector(".new-post-btn");
+
+    // Obtém a posição x do botão
+    let rect = button.getBoundingClientRect();
+    let buttonX = rect.left + window.scrollX; // Considera a rolagem
+
+    // Define a posição inicial do modal
+    modal.style.left = `${buttonX - 150}px`; // Ajusta X do botão - 200px
+    modal.style.top = "80px"; // Sempre 80px do topo
+    modal.style.transform = "translate(0, -20px)"; // Começa ligeiramente acima
+    modal.style.display = "block";
+
+    setTimeout(() => {
+        modal.style.opacity = "1";
+        modal.style.transform = "translate(0, 0)"; // Move suavemente para a posição final
+    }, 50);
+}
+
+function closeModal() {
+    let modal = document.getElementById("newPostModal");
+
+    modal.style.opacity = "0";
+    modal.style.transform = "translate(0, -20px)"; // Sobe levemente antes de sumir
+
+    setTimeout(() => {
+        modal.style.display = "none";
+    }, 300);
+}
+
+</script>
 
 {% endblock %}
