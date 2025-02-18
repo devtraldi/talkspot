@@ -39,28 +39,39 @@
 
 <div class="container-fluid">
     <div class="row">
+
+        <!-- Navbar vertical (coluna 1) -->
         <div class="col-sm-auto bg-light sticky-top">
             <div class="d-flex flex-sm-column flex-row flex-nowrap bg-light align-items-center sticky-top">
+
+                <!-- Navbar Logo  -->
                 <a href="{% url 'app_index' %}" class="d-block p-3 link-dark text-decoration-none" title=""
                    data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Icon-only">
                     <img src="{% static 'app/images/logo_icone.png' %}" alt="Logo Talk Spot" class="img-fluid"
                          style="width: 2.5rem; height: 2.5rem;">
                 </a>
+
+                <!-- Navbar Itens  -->
                 <ul class="nav nav-pills nav-flush flex-sm-column flex-row flex-nowrap mb-auto mx-auto text-center align-items-center">
+
+                    <!-- Navbar Seta pra topo da página  -->
                     <li class="nav-item">
                         <a href="#" class="nav-link py-3 px-2" title="" data-bs-toggle="tooltip"
                            data-bs-placement="right" data-bs-original-title="Home">
-                            <i class="bi-arrow-up fs-1"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="nav-link py-3 px-2" title="" data-bs-toggle="tooltip"
-                           data-bs-placement="right" data-bs-original-title="Dashboard">
-                            <i class="bi-search fs-1"></i>
+                            <i class="bi-arrow-up fs-1 text-dark"></i>
                         </a>
                     </li>
 
+                    <!-- Navbar Search  -->
+                    <li>
+                        <a href="#" class="nav-link py-3 px-2" title="" data-bs-toggle="tooltip"
+                           data-bs-placement="right" data-bs-original-title="Dashboard">
+                            <i class="bi-search fs-1 text-dark"></i>
+                        </a>
+                    </li>
                 </ul>
+
+                <!-- Navbar Dropdown  -->
                 <div class="dropdown">
                     <a href="#"
                        class="d-flex align-items-center justify-content-center p-3 link-dark text-decoration-none dropdown-toggle"
@@ -108,12 +119,7 @@
                             <div class="col">
                                 <!-- Autor e Data amigável -->
                                 <p class="text-muted mb-1">
-                                    {{ post.author.username }} -
-                                    {% if post.created_at|timesince < "7 days" %}
-                                    {{ post.created_at|timesince }}
-                                    {% else %}
-                                    {{ post.created_at|date:"d/m/y" }}
-                                    {% endif %}
+                                    {{ post.author.username }} - {{ post.created_at|timesince }}
                                 </p>
 
                                 <!-- Ícone de opções (três pontinhos) -->
@@ -141,6 +147,7 @@
                                         </ul>
                                     </div>
                                 </div>
+
                                 <!-- Modal de confirmação deletar post -->
                                 <div class="modal fade" id="deleteModal{{ post.id }}" tabindex="-1"
                                      aria-labelledby="deleteModalLabel{{ post.id }}" aria-hidden="true">
@@ -213,18 +220,136 @@
                                         </button>
                                     </form>
 
-
                                     <!-- Compartilhar -->
                                     <button type="button" class="icon-btn share-btn"
                                             onclick="sharePost('{{ request.build_absolute_uri }}')">
                                         <i class="bi bi-upload"></i>
                                     </button>
 
-
                                 </div>
                             </div>
                         </div>
                     </li>
+
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <!-- Trending -->
+        <div class="col-sm p-3 min-vh-100 d-none d-md-block">
+            <div class="container">
+                <ul class="list-group">
+                    <li class="list-group-item" style="max-width: 300px; min-width: 180px;">
+                        <div class="row">
+                            <h4 style="text-align: right">Trending</h4>
+                            {% for post in trending_posts %}
+                            <p class="text-muted mb-1">
+                                <a href="{% url 'post_list' post.id %}"
+                                       class="icon-btn comment-btn me-3 like-count">
+                                    <span class="like-count">{{ post.total_likes }} <i class="bi bi-heart like-count"></i> - {{ post.author.username }} - {{ post.title }}</span>
+                                </a>
+                            </p>
+                            {% endfor %}
+
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+<!-- Content -->
+
+
+<!-- Código AJAX para curtir/descurtir não mover a página e bookmark também-->
+<script src=" https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js "></script>
+<!-- Bootstrap Bundle (com Popper.js) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+    // AJAX para curtir e a janela não saltar
+    $(document).ready(function() {
+        $(".like-form").on("click", ".like-button", function() {
+            var form = $(this).closest(".like-form");
+            var postId = form.data("post-id");
+            var likeCountSpan = form.find(".like-count");
+            var heartIcon = form.find("i");
+
+            $.ajax({
+                type: "POST",
+                url: "{% url 'like_post' 0 %}".replace("0", postId),
+                data: {
+                    csrfmiddlewaretoken: form.find("input[name=csrfmiddlewaretoken]").val(),
+                },
+                success: function(response) {
+                    likeCountSpan.text(response.likes);
+                    heartIcon.toggleClass("bi-heart bi-heart-fill text-danger");
+                }
+            });
+        });
+    });
+
+    // AJAX para bookmarkar e a janela não saltar
+    $(document).ready(function() {
+        $(".bookmark-form").on("click", ".bookmark-btn", function() {
+            var form = $(this).closest(".bookmark-form");
+            var postId = form.data("post-id");
+            var bookmarkIcon = form.find("i");
+
+            $.ajax({
+                type: "POST",
+                url: "{% url 'bookmark_post' 0 %}".replace("0", postId),
+                data: {
+                    csrfmiddlewaretoken: form.find("input[name=csrfmiddlewaretoken]").val(),
+                },
+                success: function(response) {
+                    if (response.bookmarked) {
+                        bookmarkIcon.addClass("bi-bookmark-fill bookmarked").removeClass("bi-bookmark");
+                    } else {
+                        bookmarkIcon.addClass("bi-bookmark").removeClass("bi-bookmark-fill bookmarked");
+                    }
+                }
+            });
+        });
+    });
+
+    // JS para compartilhar
+    function sharePost(postUrl) {
+        var shareUrl = encodeURIComponent(postUrl);
+        if (navigator.share) {
+            navigator.share({
+                title: "Compartilhar Post",
+                url: postUrl
+            }).catch((error) => console.log("Erro ao compartilhar:", error));
+        } else {
+            window.open("https://api.whatsapp.com/send?text=" + shareUrl, "_blank");
+        }
+    }
+
+    function copyLink(url) {
+        navigator.clipboard.writeText(url).then(() => {
+            alert("Link copiado!");
+        });
+    }
+
+    function shareWhatsApp(url) {
+        window.open("https://api.whatsapp.com/send?text=" + encodeURIComponent(url), "_blank");
+    }
+
+</script>
+
+<!-- Footer -->
+<footer class="footer bg-dark text-white text-center py-3">
+    <p class="mb-0">TalkSpot (c) 2025</p>
+</footer>
+</body>
 
                     <!-- Botões de editar e deletar
                     {% if request.user == post.author %}
@@ -236,103 +361,4 @@
                             Deletar
                         </button>
                     {% endif %} -->
-
-
-                    {% endfor %}
-
-                </ul>
-            </div>
-
-
-            <!-- Código AJAX para curtir/descurtir não mover a página e bookmark também-->
-            <script src=" https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js "></script>
-            <!-- Bootstrap Bundle (com Popper.js) -->
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-            <script>
-                $(document).ready(function() {
-                    $(".like-form").on("click", ".like-button", function() {
-                        var form = $(this).closest(".like-form");
-                        var postId = form.data("post-id");
-                        var likeCountSpan = form.find(".like-count");
-                        var heartIcon = form.find("i");
-
-                        $.ajax({
-                            type: "POST",
-                            url: "{% url 'like_post' 0 %}".replace("0", postId),
-                            data: {
-                                csrfmiddlewaretoken: form.find("input[name=csrfmiddlewaretoken]").val(),
-                            },
-                            success: function(response) {
-                                likeCountSpan.text(response.likes);
-                                heartIcon.toggleClass("bi-heart bi-heart-fill text-danger");
-                            }
-                        });
-                    });
-                });
-
-
-                $(document).ready(function() {
-                    $(".bookmark-form").on("click", ".bookmark-btn", function() {
-                        var form = $(this).closest(".bookmark-form");
-                        var postId = form.data("post-id");
-                        var bookmarkIcon = form.find("i");
-
-                        $.ajax({
-                            type: "POST",
-                            url: "{% url 'bookmark_post' 0 %}".replace("0", postId),
-                            data: {
-                                csrfmiddlewaretoken: form.find("input[name=csrfmiddlewaretoken]").val(),
-                            },
-                            success: function(response) {
-                                if (response.bookmarked) {
-                                    bookmarkIcon.addClass("bi-bookmark-fill bookmarked").removeClass("bi-bookmark");
-                                } else {
-                                    bookmarkIcon.addClass("bi-bookmark").removeClass("bi-bookmark-fill bookmarked");
-                                }
-                            }
-                        });
-                    });
-                });
-
-
-                function sharePost(postUrl) {
-                    var shareUrl = encodeURIComponent(postUrl);
-                    if (navigator.share) {
-                        navigator.share({
-                            title: "Compartilhar Post",
-                            url: postUrl
-                        }).catch((error) => console.log("Erro ao compartilhar:", error));
-                    } else {
-                        window.open("https://api.whatsapp.com/send?text=" + shareUrl, "_blank");
-                    }
-                }
-
-
-                function copyLink(url) {
-                    navigator.clipboard.writeText(url).then(() => {
-                        alert("Link copiado!");
-                    });
-                }
-
-                function shareWhatsApp(url) {
-                    window.open("https://api.whatsapp.com/send?text=" + encodeURIComponent(url), "_blank");
-                }
-
-            </script>
-        </div>
-    </div>
-</div>
-
-
-<!-- Content -->
-
-
-<!-- Footer -->
-<footer class="footer bg-dark text-white text-center py-3">
-    <p class="mb-0">TalkSpot (c) 2025</p>
-</footer>
-</body>
-
 </html>

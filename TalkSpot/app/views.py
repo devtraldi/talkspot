@@ -8,6 +8,7 @@ import random
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
+from django.utils import timezone
 
 User = get_user_model()
 
@@ -56,15 +57,56 @@ def cadastro(request):
 
 @login_required(login_url='app_login')
 def index(request):
-    posts = Post.objects.all().order_by('-created_at')  # Busca todos os posts, ordenados por data
-    return render(request, 'app/app.html', {'posts': posts})
 
+    # Busca todos os posts, ordenados por data
+    posts = Post.objects.all().order_by('-created_at')
+
+    # Posts trending (últimos 7 dias, ordenados por curtidas)
+    seven_days_ago = timezone.now() - timezone.timedelta(days=7)
+    trending_posts = Post.objects.filter(
+        created_at__gte=seven_days_ago
+    ).annotate(
+        total_likes=Count('likes')
+    ).order_by(
+        '-total_likes'
+    )[:5]  # Limita a 5 posts
+
+    return render(request, 'app/app.html', {'posts': posts, 'trending_posts': trending_posts})
+
+
+@login_required(login_url='app_login')
+def trending(request):
+    # Calcula a data de 7 dias atrás
+    seven_days_ago = timezone.now() - timezone.timedelta(days=7)
+
+    # Filtra os posts dos últimos 7 dias e ordena por curtidas
+    posts = Post.objects.filter(
+        created_at__gte=seven_days_ago  # Filtra posts criados nos últimos 7 dias
+    ).annotate(
+        total_likes=Count('likes')  # Conta o número de curtidas
+    ).order_by(
+        '-total_likes'  # Ordena por curtidas em ordem decrescente
+    )
+
+    return render(request, 'app/trending.html', {'posts': posts})
 
 @login_required(login_url='app_login')
 def relevance(request):
     # Annotate cada post com o número de curtidas e ordena por curtidas em ordem decrescente
     posts = Post.objects.annotate(total_likes=Count('likes')).order_by('-total_likes')
-    return render(request, 'app/app_relevance.html', {'posts': posts})
+
+    # Posts trending (últimos 7 dias, ordenados por curtidas)
+    seven_days_ago = timezone.now() - timezone.timedelta(days=7)
+    trending_posts = Post.objects.filter(
+        created_at__gte=seven_days_ago
+    ).annotate(
+        total_likes=Count('likes')
+    ).order_by(
+        '-total_likes'
+    )[:5]  # Limita a 5 posts
+
+    return render(request, 'app/app_relevance.html', {'posts': posts, 'trending_posts': trending_posts})
+
 
 
 def app_login(request):
@@ -87,7 +129,20 @@ def app_logout(request):
 @login_required(login_url='app_login')
 def post_list(request, post_id):
     post = get_object_or_404(Post, id=post_id)
-    return render(request, 'app/post.html', {'post': post})
+
+    # Posts trending (últimos 7 dias, ordenados por curtidas)
+    seven_days_ago = timezone.now() - timezone.timedelta(days=7)
+    trending_posts = Post.objects.filter(
+        created_at__gte=seven_days_ago
+    ).annotate(
+        total_likes=Count('likes')
+    ).order_by(
+        '-total_likes'
+    )[:5]  # Limita a 5 posts
+
+    return render(request, 'app/post.html', {'post': post, 'trending_posts': trending_posts})
+
+
 
 
 @login_required(login_url='app_login')
@@ -114,7 +169,18 @@ def edit_post(request, post_id):
         post.content = request.POST.get('content')
         post.save()
         return redirect('post_list', post_id=post.id)
-    return render(request, 'app/edit_post.html', {'post': post})
+
+    # Posts trending (últimos 7 dias, ordenados por curtidas)
+    seven_days_ago = timezone.now() - timezone.timedelta(days=7)
+    trending_posts = Post.objects.filter(
+        created_at__gte=seven_days_ago
+    ).annotate(
+        total_likes=Count('likes')
+    ).order_by(
+        '-total_likes'
+    )[:5]  # Limita a 5 posts
+
+    return render(request, 'app/edit_post.html', {'post': post, 'trending_posts': trending_posts})
 
 
 @login_required(login_url='app_login')
@@ -154,7 +220,19 @@ def edit_comment(request, post_id, comment_id):
         comment.content = request.POST.get('content')
         comment.save()
         return redirect('post_list', post_id=post_id)
-    return render(request, 'app/edit_comment.html', {'comment': comment})
+
+
+    # Posts trending (últimos 7 dias, ordenados por curtidas)
+    seven_days_ago = timezone.now() - timezone.timedelta(days=7)
+    trending_posts = Post.objects.filter(
+        created_at__gte=seven_days_ago
+    ).annotate(
+        total_likes=Count('likes')
+    ).order_by(
+        '-total_likes'
+    )[:5]  # Limita a 5 posts
+
+    return render(request, 'app/edit_comment.html', {'comment': comment, 'trending_posts': trending_posts})
 
 
 @login_required(login_url='app_login')
@@ -205,11 +283,35 @@ def bookmark_post(request, post_id):
 @login_required(login_url='app_login')
 def bookmarked_posts(request):
     posts = request.user.bookmarked_posts.all()
-    return render(request, 'app/bookmarked_posts.html', {'posts': posts})
+
+    # Posts trending (últimos 7 dias, ordenados por curtidas)
+    seven_days_ago = timezone.now() - timezone.timedelta(days=7)
+    trending_posts = Post.objects.filter(
+        created_at__gte=seven_days_ago
+    ).annotate(
+        total_likes=Count('likes')
+    ).order_by(
+        '-total_likes'
+    )[:5]  # Limita a 5 posts
+
+    return render(request, 'app/bookmarked_posts.html', {'posts': posts, 'trending_posts': trending_posts})
+
 
 
 @login_required(login_url='app_login')
 def user_posts(request, username):
     user_profile = get_object_or_404(User, username=username)
     posts = Post.objects.filter(author=user_profile).order_by('-created_at')
-    return render(request, 'app/user_posts.html', {'user_profile': user_profile, 'posts': posts})
+
+    # Posts trending (últimos 7 dias, ordenados por curtidas)
+    seven_days_ago = timezone.now() - timezone.timedelta(days=7)
+    trending_posts = Post.objects.filter(
+        created_at__gte=seven_days_ago
+    ).annotate(
+        total_likes=Count('likes')
+    ).order_by(
+        '-total_likes'
+    )[:5]  # Limita a 5 posts
+
+    return render(request, 'app/user_posts.html', {'user_profile': user_profile, 'posts': posts, 'trending_posts': trending_posts})
+

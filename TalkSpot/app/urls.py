@@ -4,6 +4,7 @@ from . import views
 urlpatterns = [
     path('', views.index, name='app_index'),
     path('relevance/', views.relevance, name='app_relevance'),  # Posts ordenados por curtidas
+    path('trending/', views.trending, name='app_trending'), # Posts ordenados por trending
     path('login/', views.app_login, name='app_login'),
     path('logout/', views.app_logout, name='app_logout'),
     path('cadastro/', views.cadastro, name='cadastro'),
