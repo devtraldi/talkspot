@@ -5,7 +5,7 @@
 
 <!-- Botão Novo Post -->
 <div class="container" style="max-width: 700px;min-width: 180px;margin-left: 0px;margin-right: 0px;" align="right">
-        <button class="new-post-btn"  style="margin-bottom: 15px;" onclick="openModal()">+ New Post</button>
+        <button class="new-post-btn"  style="margin-bottom: 15px;" onclick="openModal()">+ Novo Post</button>
 </div>
 
 <!-- Modal Novo Post -->
@@ -15,16 +15,18 @@
         <h2 class="modal-title">Criar Novo Post</h2>
         <form action="{% url 'create_post' %}" method="POST">
             {% csrf_token %}
-            <label for="postTitle">Título:</label>
-            <input type="text" id="postTitle" name="title" required>
 
-            <label for="postContent">Conteúdo:</label>
-            <textarea id="postContent" name="content" required></textarea>
+            <label for="postTitle" class="input-label">Título:</label>
+            <input type="text" id="postTitle" name="title" class="input-field" required>
 
-            <button type="submit" class="new-post-btn">Postar</button>
+            <label for="postContent" class="input-label">Conteúdo:</label>
+            <textarea id="postContent" name="content" class="input-field textarea-field" required></textarea>
+
+            <button type="submit" class="submit-btn new-post-btn">Postar</button>
         </form>
     </div>
 </div>
+
 
 <!-- Estilos -->
 <style>
@@ -57,20 +59,47 @@
 .new-post-modal {
     display: none;
     position: fixed;
-    width: 30%;
+    width: 60%;
     min-width: 300px;
     max-width: 400px;
-    top: 10%;
-    right: 20px;
-    transform: translate(0, -20px);
+    top: 80px;
+    right: auto;
+    left: 50%;
+    transform: translate(-50%, -20px);
     background: #fff;
     border: 3px solid #000;
     border-radius: 15px;
     box-shadow: 5px 5px 0px #000;
-    padding: 15px;
+    padding: 20px;
     z-index: 1001;
     transition: all 0.3s ease-in-out;
     opacity: 0;
+}
+
+/* Labels */
+.input-label {
+    margin-bottom: 5px; /* Adicionado para espaçar melhor os labels */
+    display: block; /* Garante que os labels fiquem acima dos inputs */
+}
+
+/* Campos de entrada e textarea */
+.input-field {
+    width: 100%; /* Agora todos os inputs têm o mesmo tamanho */
+    padding: 10px; /* Adicionado para melhorar a experiência de digitação */
+    border-radius: 8px; /* Antes não tinha borda arredondada */
+    margin-bottom: 15px; /* Maior espaçamento entre os campos */
+}
+
+/* Textarea */
+.textarea-field {
+    height: 100px; /* Antes não tinha altura definida, agora equivale a 4 linhas */
+}
+
+/* Botão Postar */
+.submit-btn {
+    width: 100%; /* Agora tem o mesmo tamanho dos inputs */
+    padding: 12px; /* Antes era 10px 20px, agora é uniforme */
+    margin-top: 20px; /* Adicionado mais espaço acima do botão */
 }
 
 
@@ -79,6 +108,8 @@
     display: flex;
     flex-direction: column;
 }
+
+
 
 /* Botão de fechar */
 .close-btn {
