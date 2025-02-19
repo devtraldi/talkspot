@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from django.utils import timezone
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 User = get_user_model()
 
@@ -57,21 +58,14 @@ def cadastro(request):
 
 @login_required(login_url='app_login')
 def index(request):
-
     # Busca todos os posts, ordenados por data
     posts = Post.objects.all().order_by('-created_at')
 
     # Posts trending (últimos 7 dias, ordenados por curtidas)
-    seven_days_ago = timezone.now() - timezone.timedelta(days=7)
-    trending_posts = Post.objects.filter(
-        created_at__gte=seven_days_ago
-    ).annotate(
-        total_likes=Count('likes')
-    ).order_by(
-        '-total_likes'
-    )[:5]  # Limita a 5 posts
+    trending_posts = get_trending_posts(limit=5)
+    paginated_posts = paginate_queryset(request, posts)
 
-    return render(request, 'app/app.html', {'posts': posts, 'trending_posts': trending_posts})
+    return render(request, 'app/app.html', {'posts': paginated_posts, 'trending_posts': trending_posts})
 
 
 @login_required(login_url='app_login')
@@ -90,23 +84,17 @@ def trending(request):
 
     return render(request, 'app/trending.html', {'posts': posts})
 
+
 @login_required(login_url='app_login')
 def relevance(request):
     # Annotate cada post com o número de curtidas e ordena por curtidas em ordem decrescente
     posts = Post.objects.annotate(total_likes=Count('likes')).order_by('-total_likes')
 
     # Posts trending (últimos 7 dias, ordenados por curtidas)
-    seven_days_ago = timezone.now() - timezone.timedelta(days=7)
-    trending_posts = Post.objects.filter(
-        created_at__gte=seven_days_ago
-    ).annotate(
-        total_likes=Count('likes')
-    ).order_by(
-        '-total_likes'
-    )[:5]  # Limita a 5 posts
+    trending_posts = get_trending_posts()
+    paginated_posts = paginate_queryset(request, posts)
 
-    return render(request, 'app/app_relevance.html', {'posts': posts, 'trending_posts': trending_posts})
-
+    return render(request, 'app/app_relevance.html', {'posts': paginated_posts, 'trending_posts': trending_posts})
 
 
 def app_login(request):
@@ -130,19 +118,9 @@ def app_logout(request):
 def post_list(request, post_id):
     post = get_object_or_404(Post, id=post_id)
 
-    # Posts trending (últimos 7 dias, ordenados por curtidas)
-    seven_days_ago = timezone.now() - timezone.timedelta(days=7)
-    trending_posts = Post.objects.filter(
-        created_at__gte=seven_days_ago
-    ).annotate(
-        total_likes=Count('likes')
-    ).order_by(
-        '-total_likes'
-    )[:5]  # Limita a 5 posts
+    trending_posts = get_trending_posts()
 
     return render(request, 'app/post.html', {'post': post, 'trending_posts': trending_posts})
-
-
 
 
 @login_required(login_url='app_login')
@@ -170,15 +148,7 @@ def edit_post(request, post_id):
         post.save()
         return redirect('post_list', post_id=post.id)
 
-    # Posts trending (últimos 7 dias, ordenados por curtidas)
-    seven_days_ago = timezone.now() - timezone.timedelta(days=7)
-    trending_posts = Post.objects.filter(
-        created_at__gte=seven_days_ago
-    ).annotate(
-        total_likes=Count('likes')
-    ).order_by(
-        '-total_likes'
-    )[:5]  # Limita a 5 posts
+    trending_posts = get_trending_posts()
 
     return render(request, 'app/edit_post.html', {'post': post, 'trending_posts': trending_posts})
 
@@ -221,16 +191,7 @@ def edit_comment(request, post_id, comment_id):
         comment.save()
         return redirect('post_list', post_id=post_id)
 
-
-    # Posts trending (últimos 7 dias, ordenados por curtidas)
-    seven_days_ago = timezone.now() - timezone.timedelta(days=7)
-    trending_posts = Post.objects.filter(
-        created_at__gte=seven_days_ago
-    ).annotate(
-        total_likes=Count('likes')
-    ).order_by(
-        '-total_likes'
-    )[:5]  # Limita a 5 posts
+    trending_posts = get_trending_posts()
 
     return render(request, 'app/edit_comment.html', {'comment': comment, 'trending_posts': trending_posts})
 
@@ -284,18 +245,9 @@ def bookmark_post(request, post_id):
 def bookmarked_posts(request):
     posts = request.user.bookmarked_posts.all()
 
-    # Posts trending (últimos 7 dias, ordenados por curtidas)
-    seven_days_ago = timezone.now() - timezone.timedelta(days=7)
-    trending_posts = Post.objects.filter(
-        created_at__gte=seven_days_ago
-    ).annotate(
-        total_likes=Count('likes')
-    ).order_by(
-        '-total_likes'
-    )[:5]  # Limita a 5 posts
+    trending_posts = get_trending_posts()
 
     return render(request, 'app/bookmarked_posts.html', {'posts': posts, 'trending_posts': trending_posts})
-
 
 
 @login_required(login_url='app_login')
@@ -303,15 +255,38 @@ def user_posts(request, username):
     user_profile = get_object_or_404(User, username=username)
     posts = Post.objects.filter(author=user_profile).order_by('-created_at')
 
-    # Posts trending (últimos 7 dias, ordenados por curtidas)
-    seven_days_ago = timezone.now() - timezone.timedelta(days=7)
-    trending_posts = Post.objects.filter(
-        created_at__gte=seven_days_ago
+    trending_posts = get_trending_posts()
+
+    return render(request, 'app/user_posts.html',
+                  {'user_profile': user_profile, 'posts': posts, 'trending_posts': trending_posts})
+
+
+def get_trending_posts(limit=5, days=7):
+    """Retorna os posts mais curtidos dos últimos 'days' dias, limitados a 'limit' resultados."""
+    since_date = timezone.now() - timezone.timedelta(days=days)
+    return Post.objects.filter(
+        created_at__gte=since_date
     ).annotate(
         total_likes=Count('likes')
     ).order_by(
         '-total_likes'
-    )[:5]  # Limita a 5 posts
+    )[:limit]
 
-    return render(request, 'app/user_posts.html', {'user_profile': user_profile, 'posts': posts, 'trending_posts': trending_posts})
+
+
+
+
+def paginate_queryset(request, queryset, per_page=5):
+    """Paginação genérica para qualquer queryset."""
+    page = request.GET.get('page', 1)
+    paginator = Paginator(queryset, per_page)
+
+    try:
+        paginated_queryset = paginator.page(page)
+    except PageNotAnInteger:
+        paginated_queryset = paginator.page(1)
+    except EmptyPage:
+        paginated_queryset = paginator.page(paginator.num_pages)
+
+    return paginated_queryset
 

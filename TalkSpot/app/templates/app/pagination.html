@@ -1,0 +1,15 @@
+<div class="pagination" style="display: flex; justify-content: center; align-items: center; gap: 15px; margin-top: 20px; max-width: 700px; min-width: 350px;">
+    {% if posts.has_previous %}
+        <a href="?page=1" style="padding: 10px 15px; background-color: #f8db27; color: #2f64d6; font-weight: bold; text-decoration: none; border-radius: 10px;">&laquo; </a>
+        <a href="?page={{ posts.previous_page_number }}" style="padding: 10px 15px; background-color: #f8db27; color: #2f64d6; font-weight: bold; text-decoration: none; border-radius: 10px;">&lsaquo; Anterior</a>
+    {% endif %}
+
+    {% if posts.has_next or posts.has_previous %}
+    <span style="padding: 15px; background-color: #7c489f; color: #fff; font-weight: bold; border-radius: 50%; width: 50px; height: 50px; display: flex; justify-content: center; align-items: center;">{{ posts.number }}</span>
+    {% endif %}
+
+    {% if posts.has_next %}
+        <a href="?page={{ posts.next_page_number }}" style="padding: 10px 15px; background-color: #f8db27; color: #2f64d6; font-weight: bold; text-decoration: none; border-radius: 10px;">Próxima &rsaquo;</a>
+        <a href="?page={{ posts.paginator.num_pages }}" style="padding: 10px 15px; background-color: #f8db27; color: #2f64d6; font-weight: bold; text-decoration: none; border-radius: 10px;"> &raquo;</a>
+    {% endif %}
+</div>

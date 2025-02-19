@@ -1,0 +1,131 @@
+{% load static %}
+<li class="list-group-item" style="max-width: 700px; min-width: 350px;">
+    <div class="row">
+        <!-- Coluna da foto -->
+        <div class="col-auto d-flex align-items-center">
+            {% if post.author.profile_picture %}
+            <a href="{% url 'user_posts' post.author %}" title=""><img
+                    src="{{ post.author.profile_picture.url }}" class="rounded-circle" width="50"
+                    height="50"></a>
+            {% else %}
+            <a href="{% url 'user_posts' post.author %}" title=""><img
+                    src="{% static 'app/images/padrao.jpg' %}" class="rounded-circle" width="50"
+                    height="50"></a>
+            {% endif %}
+        </div>
+
+        <!-- Coluna do post -->
+        <div class="col">
+            <!-- Autor e Data amigável -->
+            <p class="text-muted mb-1">
+                {{ post.author.username }} - {{ post.created_at|timesince }}
+            </p>
+
+            <!-- Ícone de opções (três pontinhos) -->
+            <div class="position-absolute top-0 end-0">
+                <div class="dropdown">
+                    <button class="btn btn-sm btn-light" type="button"
+                            id="dropdownMenu{{ post.id }}" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                        <i class="bi bi-three-dots"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end"
+                        aria-labelledby="dropdownMenu{{ post.id }}">
+                        {% if request.user == post.author %}
+                        <li><a class="dropdown-item" href="{% url 'edit_post' post.id %}"><i
+                                class="bi bi-pencil-square"></i> Editar Post</a></li>
+                        {% endif %}
+                        {% if request.user == post.author or request.user.is_staff %}
+                        <li><a class="dropdown-item text-danger" href="#" data-bs-toggle="modal"
+                               data-bs-target="#deleteModal{{ post.id }}"><i
+                                class="bi bi-trash"></i> Deletar Post</a></li>
+                        {% endif %}
+                        <li><a class="dropdown-item" href="#"
+                               onclick="copyEmbed('{{ post.id }}')"><i class="bi bi-link-45deg"></i>
+                            Copy Embed</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Modal de confirmação deletar post -->
+            <div class="modal fade" id="deleteModal{{ post.id }}" tabindex="-1"
+                 aria-labelledby="deleteModalLabel{{ post.id }}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModalLabel{{ post.id }}">Confirmar
+                                Exclusão</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Tem certeza que deseja excluir o post "{{ post.title }}"? Todos os
+                            comentários serão excluídos
+                            junto com o post.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                Cancelar
+                            </button>
+                            <a href="{% url 'delete_post' post.id %}" class="btn btn-danger">Confirmar
+                                Exclusão</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Título do Post -->
+            <a href="{% url 'post_list' post.id %}" class="text-decoration-none"
+               style="color: black"><h5 class="fw-bold mb-1">{{ post.title }}</h5></a>
+
+            <!-- Conteúdo do Post -->
+            <a href="{% url 'post_list' post.id %}" class="text-decoration-none"
+               style="color: black"><p class="mb-2">{{ post.content }}</p></a>
+
+            <!-- Ícones de interação -->
+            <div class="d-flex align-items-center mt-2">
+
+                <!-- Curtir -->
+
+                {% if not request.user.is_staff %}
+                <form class="like-form" data-post-id="{{ post.id }}">
+                    {% csrf_token %}
+                    <button type="button" class="icon-btn like-button me-3">
+                        <i class="bi {% if request.user in post.likes.all %}bi-heart-fill text-danger{% else %}bi-heart{% endif %}"></i>
+                        <span class="like-count">{{ post.total_likes }}</span>
+                    </button>
+                </form>
+                {% else %}
+                <button type="button" class="icon-btn like-button me-3" disabled
+                        title="Usuários staff não podem curtir posts.">
+                    <i class="bi bi-heart"></i>
+                    <span class="like-count">{{ post.total_likes }}</span>
+                </button>
+                {% endif %}
+
+                <!-- Comentários -->
+                <a href="{% url 'post_list' post.id %}"
+                   class="icon-btn comment-btn me-3 like-count">
+                    <i class="bi bi-chat"></i> <span
+                        class="like-count">{{ post.comments.count }}</span>
+                </a>
+
+                <!-- Salvar (Bookmark) -->
+                <form class="bookmark-form" data-post-id="{{ post.id }}">
+                    {% csrf_token %}
+                    <button type="button" class="icon-btn bookmark-btn me-3">
+                        <i class="bi {% if request.user in post.bookmarks.all %}bi-bookmark-fill bookmarked{% else %}bi-bookmark{% endif %}"></i>
+                    </button>
+                </form>
+
+                <!-- Compartilhar -->
+                <button type="button" class="icon-btn share-btn"
+                        onclick="sharePost('{{ request.build_absolute_uri }}')">
+                    <i class="bi bi-upload"></i>
+                </button>
+
+            </div>
+        </div>
+    </div>
+</li>
