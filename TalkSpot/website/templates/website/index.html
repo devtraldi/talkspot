@@ -125,7 +125,8 @@
                 <li class="nav-item"><a class="nav-link" href="#quoteSection">CITAÇÕES</a></li>
             </ul>
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="app/cadastro"><i class="bi bi-person"></i> Inscrever-se</a>
+                <li class="nav-item"><a class="nav-link" href="app/cadastro"><i class="bi bi-person"></i>
+                    Inscrever-se</a>
                 </li>
                 <li class="nav-item"><a class="nav-link" href="app/login"><i class="bi bi-box-arrow-in-right"></i>
                     Entrar</a></li>
@@ -256,6 +257,27 @@
     <p>O TalkSpot é a rede social que mais cresce no mundo, com mais de 1 milhão de usuários ativos. Aqui, você pode
         compartilhar posts, comentar, interagir e se conectar com pessoas de todo o planeta. Tudo isso em uma plataforma
         simples, segura e divertida.</p>
+
+    <div class="container d-flex justify-content-center">
+        <div class="row align-items-center">
+            <!-- Card 1 -->
+            <div class="stats-card col-md-6" style="margin: 20px;
+    width: 400px; height: 400px; border-radius: 15px; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; ">
+                <div class="text-center">
+                    <img src="static/website/images/telemovel.jpg" alt="telemovel.jpg" class="img-fluid"
+                         style="border-radius: 15px;">
+                </div>
+            </div>
+            <!-- Card 2 -->
+             <div class="stats-card col-md-6" style="margin: 20px;
+    width: 400px; height: 400px; border-radius: 15px; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; ">
+                <div class="text-center">
+                    <img src="static/website/images/desktop.jpg" alt="telemovel.jpg" class="img-fluid"
+                         style="border-radius: 15px;">
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
 <!-- Seção Estatísticas -->
@@ -307,10 +329,14 @@
         <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
             <!-- Indicadores -->
             <div class="carousel-indicators">
-                <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="0" class="active"
+                        aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="1"
+                        aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="2"
+                        aria-label="Slide 3"></button>
+                <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="3"
+                        aria-label="Slide 4"></button>
             </div>
 
             <!-- Slides -->
@@ -318,8 +344,11 @@
                 <!-- Depoimento 1 - Ned Flanders -->
                 <div class="carousel-item active">
                     <div class="testimonial-card text-center">
-                        <img src="{% static 'website/images/ned_flanders.png' %}" alt="Ned Flanders" class="testimonial-img rounded-circle">
-                        <p class="testimonial-text">"O TalkSpot é uma bênção! Finalmente um lugar onde posso compartilhar minhas ideias e me conectar com meus vizinhos de Springfield. Okily dokily!"</p>
+                        <img src="{% static 'website/images/ned_flanders.png' %}" alt="Ned Flanders"
+                             class="testimonial-img rounded-circle">
+                        <p class="testimonial-text">"O TalkSpot é uma bênção! Finalmente um lugar onde posso
+                            compartilhar minhas ideias e me conectar com meus vizinhos de Springfield. Okily
+                            dokily!"</p>
                         <p class="testimonial-author">– Ned Flanders</p>
                     </div>
                 </div>
@@ -327,8 +356,10 @@
                 <!-- Depoimento 2 - Diretor Skinner -->
                 <div class="carousel-item">
                     <div class="testimonial-card text-center">
-                        <img src="{% static 'website/images/skinner.png' %}" alt="Diretor Skinner" class="testimonial-img rounded-circle">
-                        <p class="testimonial-text">"O TalkSpot é uma ferramenta incrível para educadores e alunos. Agora posso me comunicar melhor com a comunidade escolar. Excelente!"</p>
+                        <img src="{% static 'website/images/skinner.png' %}" alt="Diretor Skinner"
+                             class="testimonial-img rounded-circle">
+                        <p class="testimonial-text">"O TalkSpot é uma ferramenta incrível para educadores e alunos.
+                            Agora posso me comunicar melhor com a comunidade escolar. Excelente!"</p>
                         <p class="testimonial-author">– Diretor Skinner</p>
                     </div>
                 </div>
@@ -336,8 +367,10 @@
                 <!-- Depoimento 3 - Marge Simpson -->
                 <div class="carousel-item">
                     <div class="testimonial-card text-center">
-                        <img src="{% static 'website/images/marge.png' %}" alt="Marge Simpson" class="testimonial-img rounded-circle">
-                        <p class="testimonial-text">"Adoro o TalkSpot! É tão fácil compartilhar receitas e dicas de jardinagem com minhas amigas. Recomendo a todas as mães de Springfield!"</p>
+                        <img src="{% static 'website/images/marge.png' %}" alt="Marge Simpson"
+                             class="testimonial-img rounded-circle">
+                        <p class="testimonial-text">"Adoro o TalkSpot! É tão fácil compartilhar receitas e dicas de
+                            jardinagem com minhas amigas. Recomendo a todas as mães de Springfield!"</p>
                         <p class="testimonial-author">– Marge Simpson</p>
                     </div>
                 </div>
@@ -345,19 +378,23 @@
                 <!-- Depoimento 4 - Krusty, o Palhaço -->
                 <div class="carousel-item">
                     <div class="testimonial-card text-center">
-                        <img src="{% static 'website/images/krusty.png' %}" alt="Krusty, o Palhaço" class="testimonial-img rounded-circle">
-                        <p class="testimonial-text">"O TalkSpot é o máximo! Agora posso promover meus shows e interagir com meus fãs. É quase tão bom quanto dinheiro fácil!"</p>
+                        <img src="{% static 'website/images/krusty.png' %}" alt="Krusty, o Palhaço"
+                             class="testimonial-img rounded-circle">
+                        <p class="testimonial-text">"O TalkSpot é o máximo! Agora posso promover meus shows e interagir
+                            com meus fãs. É quase tão bom quanto dinheiro fácil!"</p>
                         <p class="testimonial-author">– Krusty, o Palhaço</p>
                     </div>
                 </div>
             </div>
 
             <!-- Controles (setas) -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev" style="display: block;">
+            <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel"
+                    data-bs-slide="prev" style="display: block;">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Anterior</span>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next" style="display: block;">
+            <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel"
+                    data-bs-slide="next" style="display: block;">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Próximo</span>
             </button>
@@ -409,7 +446,8 @@
     <div class="container">
         <div class="content text-center">
             <p>
-                Criado com <i class="bi bi-heart-fill"></i> + <i class="bi bi-cup-hot-fill"></i> por <strong>Maya, Rute e Rafael</strong>.
+                Criado com <i class="bi bi-heart-fill"></i> + <i class="bi bi-cup-hot-fill"></i> por <strong>Maya, Rute
+                e Rafael</strong>.
             </p>
         </div>
     </div>
@@ -418,7 +456,6 @@
     <a href="/terms">Termos de Uso</a> |
     <a href="/privacy">Política de Privacidade</a> |
     <a href="{% url 'bart_game' %}">Jogar Bart Game</a>
-
 
 
 </footer>
