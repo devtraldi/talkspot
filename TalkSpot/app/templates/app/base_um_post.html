@@ -5,12 +5,12 @@
         <div class="col-auto d-flex align-items-center">
             {% if post.author.profile_picture %}
             <a href="{% url 'user_posts' post.author %}" title=""><img
-                    src="{{ post.author.profile_picture.url }}" class="rounded-circle" width="50"
-                    height="50"></a>
+                    src="{{ post.author.profile_picture.url }}" class="" width="60"
+                    height="80" style="border-radius: 10px;"></a>
             {% else %}
             <a href="{% url 'user_posts' post.author %}" title=""><img
-                    src="{% static 'app/images/padrao.jpg' %}" class="rounded-circle" width="50"
-                    height="50"></a>
+                    src="{% static 'app/images/padrao.jpg' %}" class="" width="60"
+                    height="80" style="border-radius: 10px;"></a>
             {% endif %}
         </div>
 
