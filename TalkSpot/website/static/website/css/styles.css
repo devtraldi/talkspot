@@ -182,8 +182,8 @@ footer {
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
     background-color: blue;  /* Definindo a cor das setas */
-    width: 40px;  /* Ajustando a largura da seta */
-    height: 40px;  /* Ajustando a altura da seta */
+    width: 30px;  /* Ajustando a largura da seta */
+    height: 30px;  /* Ajustando a altura da seta */
 }
 
 
