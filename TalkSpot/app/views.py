@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from django.utils import timezone
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth import update_session_auth_hash
 
 User = get_user_model()
 
@@ -54,6 +55,47 @@ def cadastro(request):
         return redirect('app_index')
 
     return render(request, 'app/cadastro.html')
+
+
+@login_required
+def edit_profile(request):
+    if request.method == 'POST':
+        user = request.user
+        errors = []
+
+        # Atualiza informações básicas
+        user.username = request.POST.get('username')
+        user.first_name = request.POST.get('first_name')
+        user.last_name = request.POST.get('last_name')
+        user.email = request.POST.get('email')
+        user.bio = request.POST.get('bio')
+
+        # Atualização de senha
+        current_password = request.POST.get('current_password')
+        new_password = request.POST.get('new_password')
+        confirm_password = request.POST.get('confirm_password')
+
+        if current_password and new_password:
+            if user.check_password(current_password):
+                if new_password == confirm_password:
+                    user.set_password(new_password)
+                    update_session_auth_hash(request, user)
+                    messages.success(request, 'Senha alterada com sucesso!')
+                else:
+                    errors.append('A nova senha e a confirmação não coincidem.')
+            else:
+                errors.append('Senha atual incorreta.')
+
+        if not errors:
+            user.save()
+            messages.success(request, 'Perfil atualizado com sucesso!')
+            return redirect('app_index')  # Redireciona para home após sucesso
+
+        for error in errors:
+            messages.error(request, error)
+
+    return render(request, 'app/edit_profile.html')
+
 
 
 @login_required(login_url='app_login')
@@ -273,9 +315,6 @@ def get_trending_posts(limit=5, days=7):
     )[:limit]
 
 
-
-
-
 def paginate_queryset(request, queryset, per_page=5):
     """Paginação genérica para qualquer queryset."""
     page = request.GET.get('page', 1)
@@ -289,4 +328,3 @@ def paginate_queryset(request, queryset, per_page=5):
         paginated_queryset = paginator.page(paginator.num_pages)
 
     return paginated_queryset
-

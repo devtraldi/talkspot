@@ -1,0 +1,138 @@
+<div class="container">
+    <a href="{% url 'app_index' %}"
+       style="display: block; padding: 10px; background: blue; color: white; text-decoration: none; border-radius: 5px; width: 150px; text-align: center;">
+        Voltar para Home
+    </a>
+    <h2 class="text-center mb-4">Editar Perfil</h2>
+
+    {% if messages %}
+    <div>
+        {% for message in messages %}
+        <p style="color: {% if message.tags == 'success' %}green{% else %}red{% endif %};">
+            {{ message }}
+        </p>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% if messages %}
+    <div class="alert alert-info">
+        {% for message in messages %}
+        {{ message }}
+        {% endfor %}
+    </div>
+    {% endif %}
+    <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+        {% csrf_token %}
+        <div class="form-container">
+            <div class="form-group">
+                <label for="username" class="form-label">Username:</label>
+                <input type="text" class="form-control" id="username" name="username" value="{{ user.username }}"
+                       required>
+            </div>
+            <div class="form-group">
+                <label for="email" class="form-label">Email:</label>
+                <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}" required>
+            </div>
+            <div class="form-group">
+                <label for="first_name" class="form-label">First Name:</label>
+                <input type="text" class="form-control" id="first_name" name="first_name" value="{{ user.first_name }}">
+            </div>
+            <div class="form-group">
+                <label for="last_name" class="form-label">Last Name:</label>
+                <input type="text" class="form-control" id="last_name" name="last_name" value="{{ user.last_name }}">
+            </div>
+            <div class="form-group">
+                <label for="bio" class="form-label">Bio:</label>
+                <textarea class="form-control" id="bio" name="bio" rows="3">{{ user.bio }}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="profile_picture" class="form-label">Profile Picture:</label>
+                <input type="file" class="form-control-file" id="profile_picture" name="profile_picture">
+                {% if user.profile_picture %}
+                <div class="mt-2">
+                    <img src="{{ user.profile_picture.url }}" alt="Profile Picture" class="img-thumbnail" width="100">
+                </div>
+                {% endif %}
+            </div>
+            <hr>
+            <h4>Alterar Senha</h4>
+            <div class="form-group">
+                <label for="current_password" class="form-label">Senha Atual:</label>
+                <input type="password" class="form-control" id="current_password" name="current_password">
+            </div>
+            <div class="form-group">
+                <label for="new_password" class="form-label">Nova Senha:</label>
+                <input type="password" class="form-control" id="new_password" name="new_password">
+            </div>
+            <div class="form-group">
+                <label for="confirm_password" class="form-label">Confirmar Nova Senha:</label>
+                <input type="password" class="form-control" id="confirm_password" name="confirm_password">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary w-100 mb-3">Salvar Alterações</button>
+    </form>
+</div>
+
+<style>
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 30px;
+        background-color: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        color: #343a40;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .form-container {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .form-label {
+        font-weight: 500;
+        color: #495057;
+    }
+
+    .form-control {
+        border-radius: 8px;
+        border: 1px solid #ced4da;
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .form-control:focus {
+        border-color: #80bdff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+        padding: 12px;
+        font-size: 16px;
+        border-radius: 8px;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    .img-thumbnail {
+        border-radius: 10px;
+        border: 1px solid #ddd;
+    }
+</style>
