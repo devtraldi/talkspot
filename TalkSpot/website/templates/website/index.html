@@ -105,13 +105,36 @@
             );
         }
 
+
+        // navbar hambuguer recolhe quando clica em qualquer lugar
+        document.addEventListener("DOMContentLoaded", function () {
+        let navbarToggler = document.querySelector(".navbar-toggler");
+        let navbarCollapse = document.querySelector(".navbar-collapse");
+        let navLinks = document.querySelectorAll(".nav-link");
+
+        // Fecha a navbar ao clicar fora dela
+        document.addEventListener("click", function (event) {
+            if (!navbarCollapse.contains(event.target) && !navbarToggler.contains(event.target)) {
+                navbarCollapse.classList.remove("show");
+            }
+        });
+
+        // Fecha a navbar ao clicar em um link
+        navLinks.forEach(function (link) {
+            link.addEventListener("click", function () {
+                navbarCollapse.classList.remove("show");
+            });
+        });
+    });
+
+
     </script>
 
 </head>
 
 <body>
 <!-- Menus -->
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark sticky-top navbar-hidden">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top navbar-hidden">
     <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
@@ -125,10 +148,10 @@
                 <li class="nav-item"><a class="nav-link" href="#quoteSection">CITAÇÕES</a></li>
             </ul>
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="app/cadastro"><i class="bi bi-person"></i>
+                <li class="nav-item"><a class="nav-link" href="app/cadastro" style="white-space: nowrap;"><i class="bi bi-person"></i>
                     Inscrever-se</a>
                 </li>
-                <li class="nav-item"><a class="nav-link" href="app/login"><i class="bi bi-box-arrow-in-right"></i>
+                <li class="nav-item"><a class="nav-link" href="app/login" style="white-space: nowrap;"><i class="bi bi-box-arrow-in-right"></i>
                     Entrar</a></li>
             </ul>
         </div>
@@ -269,7 +292,7 @@
                 </div>
             </div>
             <!-- Card 2 -->
-             <div class="stats-card col-md-6" style="margin: 20px;
+            <div class="stats-card col-md-6" style="margin: 20px;
     width: 400px; height: 400px; border-radius: 15px; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; ">
                 <div class="text-center">
                     <img src="static/website/images/desktop.jpg" alt="telemovel.jpg" class="img-fluid"
