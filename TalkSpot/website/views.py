@@ -26,3 +26,7 @@ def get_random_quote(request):
 
 def bart_game(request):
     return render(request, 'website/bart_game.html')
+
+
+def em_construcao(request):
+    return render(request, 'website/em_construcao.html')
