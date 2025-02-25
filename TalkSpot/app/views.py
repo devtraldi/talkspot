@@ -303,7 +303,7 @@ def user_posts(request, username):
                   {'user_profile': user_profile, 'posts': posts, 'trending_posts': trending_posts})
 
 
-def get_trending_posts(limit=5, days=7):
+def get_trending_posts(limit=5, days=14):
     """Retorna os posts mais curtidos dos últimos 'days' dias, limitados a 'limit' resultados."""
     since_date = timezone.now() - timezone.timedelta(days=days)
     return Post.objects.filter(

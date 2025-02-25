@@ -7,9 +7,9 @@
 <div class="user-header text-center mb-4">
     <div class="user-photo mb-3">
         {% if user_profile.profile_picture %}
-        <img src="{{ user_profile.profile_picture.url }}" class="rounded-circle" width="100" height="100">
+        <img src="{{ user_profile.profile_picture.url }}" class="" width="75" height="100" style="border-radius: 10px;">
         {% else %}
-        <img src="{% static 'app/images/padrao.jpg' %}" class="rounded-circle" width="100" height="100">
+        <img src="{% static 'app/images/padrao.jpg' %}" class="" width="75" height="100" style="border-radius: 10px;">
         {% endif %}
     </div>
     <h2>{{ user_profile.username }}</h2>
