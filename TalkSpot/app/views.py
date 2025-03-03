@@ -51,7 +51,7 @@ def cadastro(request):
         user.save()
 
         login(request, user)
-        messages.success(request, 'Cadastro realizado com sucesso!')
+        messages.success(request, '')
         return redirect('app_index')
 
     return render(request, 'app/cadastro.html')
