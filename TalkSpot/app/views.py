@@ -153,7 +153,7 @@ def app_login(request):
 
 def app_logout(request):
     logout(request)
-    return redirect('app_login')
+    return redirect('website_index')
 
 
 @login_required(login_url='app_login')
