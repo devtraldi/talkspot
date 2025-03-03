@@ -97,7 +97,6 @@ def edit_profile(request):
     return render(request, 'app/edit_profile.html')
 
 
-
 @login_required(login_url='app_login')
 def index(request):
     # Busca todos os posts, ordenados por data
@@ -270,6 +269,23 @@ def like_post(request, post_id):
 
 
 @login_required(login_url='app_login')
+def like_comment(request, post_id, comment_id):
+    if request.user.is_staff:
+        return JsonResponse({"error": "Usuários staff não podem curtir comentários."}, status=403)
+
+    comment = get_object_or_404(Comment, id=comment_id, post__id=post_id)
+
+    if request.user in comment.likes.all():
+        comment.likes.remove(request.user)
+        liked = False
+    else:
+        comment.likes.add(request.user)
+        liked = True
+
+    return JsonResponse({"likes": comment.likes.count(), "liked": liked})
+
+
+@login_required(login_url='app_login')
 def bookmark_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
 
@@ -301,6 +317,17 @@ def user_posts(request, username):
 
     return render(request, 'app/user_posts.html',
                   {'user_profile': user_profile, 'posts': posts, 'trending_posts': trending_posts})
+
+
+@login_required(login_url='app_login')
+def post_detail(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    comments = post.comments.all().order_by('-created_at')  # Ordena por created_at decrescente
+
+    return render(request, 'app/post.html', {
+        'post': post,
+        'comments': comments
+    })
 
 
 def get_trending_posts(limit=5, days=14):

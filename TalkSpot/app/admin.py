@@ -36,7 +36,7 @@ class PostAdmin(admin.ModelAdmin):
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('content_preview', 'author', 'post', 'created_at')
+    list_display = ('content_preview', 'author', 'post', 'created_at', 'total_likes_display')
     list_filter = ('author', 'post', 'created_at')
     search_fields = ('content', 'author__first_name', 'author__last_name', 'post__title')
     ordering = ('post', 'created_at',)
@@ -45,6 +45,11 @@ class CommentAdmin(admin.ModelAdmin):
         return obj.content[:50] + '...' if len(obj.content) > 50 else obj.content
 
     content_preview.short_description = 'Content Preview'
+
+    def total_likes_display(self, obj):
+        return obj.total_likes()
+
+    total_likes_display.short_description = 'Total Likes'
 
 
 @admin.register(Quote)
