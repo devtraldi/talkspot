@@ -1,4 +1,8 @@
 <div class="container">
+    <a href="{% url 'website_index' %}"
+       style="display: block; padding: 10px; background: blue; color: white; text-decoration: none; border-radius: 5px; width: 150px; text-align: center;">
+        Voltar para Home
+    </a>
     <h2 class="text-center mb-4">Cadastro</h2>
     <form method="post" enctype="multipart/form-data" id="cadastroForm" class="needs-validation" novalidate>
         {% csrf_token %}
@@ -44,8 +48,11 @@
                 <label for="profile_picture" class="form-label">Profile Picture:</label>
                 <input type="file" class="form-control-file" id="profile_picture" name="profile_picture">
             </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary w-100 mb-3 btn-block">Cadastrar</button>
+            </div>
         </div>
-        <button type="submit" class="btn btn-primary w-100 mb-3">Cadastrar</button>
+
     </form>
     <p class="text-center mt-3">Já tens cadastro? <a href="{% url 'app_login' %}" class="text-decoration-none">Faça login</a></p>
 </div>

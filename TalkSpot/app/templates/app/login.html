@@ -1,4 +1,8 @@
 <div class="container">
+    <a href="{% url 'website_index' %}"
+       style="display: block; padding: 10px; background: blue; color: white; text-decoration: none; border-radius: 5px; width: 150px; text-align: center;">
+        Voltar para Home
+    </a>
     <h1 class="text-center mb-4">Login</h1>
     <form method="post" action="{% url 'app_login' %}" id="loginForm" class="needs-validation" novalidate>
         {% csrf_token %}
@@ -11,8 +15,10 @@
                 <label for="password" class="form-label">Password:</label>
                 <input type="password" class="form-control" id="password" name="password" required>
             </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary w-100 mt-3 btn-block">Login</button>
+            </div>
         </div>
-        <button type="submit" class="btn btn-primary w-100 mb-3">Login</button>
     </form>
 
     {% if messages %}
