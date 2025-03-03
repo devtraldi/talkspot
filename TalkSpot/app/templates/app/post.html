@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container">
     {% include 'app/base_um_post.html' %}
-    <hr>
+    <hr style="max-width: 700px; min-width: 350px;">
     {% for comment in post.comments.all %}
     <li class="list-group-item" style="max-width: 700px; min-width: 350px;">
         <div class="row">
@@ -71,7 +71,7 @@
                 </div>
             </div>
         </div>
-        <hr>
+        <hr style="max-width: 700px; min-width: 350px;">
     {% endfor %}
     <h4 class="mt-4">Adicionar Comentário</h4>
     <form method="post" action="{% url 'create_comment' post.id %}">
