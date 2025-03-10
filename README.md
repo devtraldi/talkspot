@@ -1,6 +1,6 @@
 # 🗣️ TalkSpot - Social Media Platform in Django
 
-This project was developed as part of **Practical Assignment 2** for the **Web Programming (UpSkill - SAP/ABAP)** course.  
+This project was developed as part of **Final Project** for the **Web Programming (Polytechnic Institute of Setúbal, PT - UPskill - Digital Skills & Jobs - SAP/ABAP)** course.  
 TalkSpot is a social media platform where users can **create posts, comment, and interact**.
 
 ## 📌 Main Features  
