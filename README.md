@@ -16,18 +16,18 @@ TalkSpot is a social media platform where users can **create posts, comment, and
 ## 📸 Screenshots  
 
 ### 🏠 Home Page  
-![Home Page](screenshots/home.png)
+![Home Page](TalkSpot/screenshots/home.png)
 ![About](TalkSpot/screenshots/about.png)
-![quotesection](screenshots/quotesection.png)
+![quotesection](TalkSpot/screenshots/quotesection.png)
 
 ### 🔒 Sign Up Page  
-![Sign Up Page](screenshots/signup.png)
+![Sign Up Page](TalkSpot/screenshots/signup.png)
 
 ### 🏠 App Home Page  
-![App Home Page](screenshots/app.png)
+![App Home Page](TalkSpot/screenshots/app.png)
 
 ### 📝 Creating a Post  
-![Create Post](screenshots/create_post.png)
+![Create Post](TalkSpot/screenshots/create_post.png)
 
 
 ---
