@@ -17,7 +17,7 @@ TalkSpot is a social media platform where users can **create posts, comment, and
 
 ### 🏠 Home Page  
 ![Home Page](screenshots/home.png)
-![About](screenshots/about.png)
+![About](TalkSpot/screenshots/about.png)
 ![quotesection](screenshots/quotesection.png)
 
 ### 🔒 Sign Up Page  
@@ -44,7 +44,7 @@ TalkSpot is a social media platform where users can **create posts, comment, and
 
 1️⃣ Clone this repository:  
 ```sh
-git clone https://github.com/YOUR_USERNAME/talkspot.git
+git clone https://github.com/devtraldi/talkspot.git
 cd talkspot
 ```
 
